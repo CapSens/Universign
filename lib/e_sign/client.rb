@@ -1,11 +1,22 @@
+require 'singleton'
+
 module ESign
   class Client
+    include ::Singleton
     attr_reader :client
 
     def initialize
       @client          = XMLRPC::Client.new2(ESign.configuration.endpoint)
       @client.user     = ESign.configuration.login
       @client.password = ESign.configuration.password
+    end
+
+    def method_missing(method, *args, &block)
+      if @client.respond_to?(method)
+        @client.send(method, *args, &block)
+      else
+        super(method, *args, &block)
+      end
     end
 
     #                          _   _

@@ -22,10 +22,10 @@ module ESign
       #
       # @return [ESign::Transaction]
       def get
-        client = ESign::Client.new.client
+        @client = ESign::Client.instance
 
         safeguard do
-          result = client.call('requester.getTransactionInfo', @transaction_id)
+          result = @client.call('requester.getTransactionInfo', @transaction_id)
           self.from_data(result)
         end
       end
@@ -52,7 +52,7 @@ module ESign
         #
         # @return [ESign::Transaction]
         def create(documents:, signers:, options: {})
-          @client = ESign::Client.new.client
+          @client = ESign::Client.instance
 
           sign_options = DEFAULT_OPTIONS.merge({
             documents: documents.map(&:params),

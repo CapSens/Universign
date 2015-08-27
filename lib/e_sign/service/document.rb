@@ -5,7 +5,7 @@ module ESign
       #
       # @return [Array<ESign::Document>]
       def documents
-        @client = ESign::Client.new.client
+        @client = ESign::Client.instance
 
         @documents ||= safeguard do
           result = @client.call('requester.getDocuments', @transaction_id)

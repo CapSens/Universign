@@ -9,6 +9,15 @@ require "e_sign"
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
+require 'dotenv'
+
+Dotenv.load
+
+ESign.configure do |config|
+  config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
+  config.login    = ENV['UNIVERSIGN_LOGIN']
+  config.password = ENV['UNIVERSIGN_PASSWORD']
+end
 
 require "irb"
 IRB.start
