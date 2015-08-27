@@ -12,43 +12,29 @@ module ESign
       def safeguard(callback = nil, &block)
         block.call
       rescue XMLRPC::FaultException => ex
-        if Rails.env.development?
-          Rails.logger.bug('ERROR', {
-            code: ex.faultCode,
-            string: ex.faultString,
-            message: ex.message
-          })
-        end
-
         known_exception = ESign::ERROR_CODE[ex.faultCode]
 
         if known_exception
           raise known_exception
         elsif ex.faultString.include?('Error on document download for this URL')
-          url = ex.faultString.match(/<(.+)>/)[1]
+          url = ex.faultString.match(/<(.+)>/)[1] rescue 'unknown URL'
           raise ESign::Document::DocumentURLInvalid.new(url)
         elsif ex.faultString.include?('Invalid document URL')
-          url = ex.faultString.match(/<(.+)>/)[1]
+          url = ex.faultString.match(/<(.+)>/)[1] rescue 'unknown URL'
           raise ESign::Document::DocumentURLInvalid.new(url)
         elsif ex.faultString.include?('Not enough tokens')
           raise ESign::NotEnoughTokens
-        elsif ex.faultString.include?("ID is unknown")
+        elsif ex.faultString.include?('ID is unknown')
           raise ESign::Document::UnknownDocument
         else
           handle_exception(ex, callback)
         end
 
       rescue RuntimeError => ex
-        if Rails.env.development?
-          Rails.logger.bug('ERROR', {
-            message: ex.message
-          })
-        end
-
         if ex.message.include?('Authorization failed')
           raise ESign::Client::InvalidCredentials
         end
-        handle_exception(ex, callback)
+        raise ex
       end
 
       private
