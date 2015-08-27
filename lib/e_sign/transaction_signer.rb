@@ -91,8 +91,8 @@ module ESign
       params[:failURL] = data
     end
 
-    # which authentication type will be used when a signer will attempt to sign.
-
+    # Which authentication type will be used when a signer will attempt to sign.
+    #
     # The available values are :
     # |   Type  |                                                                                    Description                                                                                   |
     # |:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
