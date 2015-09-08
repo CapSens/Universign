@@ -1,28 +1,44 @@
 # ESign
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/e_sign`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'e_sign'
+gem 'e_sign', git: 'git@projects.capsens.eu:NicolasBesnard/e-sign.git'
 ```
 
-And then execute:
+## TL;DR
 
-    $ bundle
 
-Or install it yourself as:
+In `config/initializers/e_sign.rb`:
 
-    $ gem install e_sign
+```ruby
+ESign.configure do |config|
+  config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
+  config.login    = ENV['UNIVERSIGN_LOGIN']
+  config.password = ENV['UNIVERSIGN_PASSWORD']
+end
+```
 
-## Usage
 
-TODO: Write usage instructions here
+```ruby
+document = ESign::Document.new(name: 'original_contract.pdf', url: self.original_contract.url)
+# document = ESign::Document.new(name: 'original_contract.pdf', content: File.open('path/to/file').read)
+
+contributor_signer = ESign::TransactionSigner.new(
+  first_name:   "Signer's first name",
+  last_name:    "Signer's last name",
+  phone_number: "0101010101",
+  success_url:  "http://success-url.con/",
+  signature:    ESign::SignatureField.new(coordinate: [20, 20], page: 1)
+)
+
+transaction = ESign::Transaction.create(
+  documents: [original_contract],
+  signers: [contributor_signer]
+)
+```
 
 ## Development
 
