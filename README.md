@@ -5,7 +5,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'e_sign', git: 'git@projects.capsens.eu:NicolasBesnard/e-sign.git'
+gem 'e_sign', git: 'git@projects.capsens.eu:rails-plugins/e_sign.git'
 ```
 
 ## TL;DR
