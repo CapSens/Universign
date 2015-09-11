@@ -61,7 +61,7 @@ module ESign
       end
 
       @signature_field        = data
-      params[:signatureField] = data
+      params[:signatureField] = data.params
     end
 
     # This signer’s birth date. This is an option for the certified
