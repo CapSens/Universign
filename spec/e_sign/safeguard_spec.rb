@@ -26,6 +26,16 @@ describe ESign::Safeguard do
   end
 
   context 'exception is XMLRPC::FaultException' do
+    context 'faultCode is 73020' do
+      it 're-raises the exception' do
+        expect {
+          dummy_class.safeguard do
+            raise XMLRPC::FaultException.new(73020, '')
+          end
+        }.to raise_error XMLRPC::FaultException
+      end
+    end
+
     context 'faultCode is known' do
       it 'raises the known exception' do
         [

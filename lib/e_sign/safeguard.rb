@@ -12,6 +12,10 @@ module ESign
       def safeguard(callback = nil, &block)
         block.call
       rescue XMLRPC::FaultException => ex
+        if ex.faultCode == 73020
+          raise ex
+        end
+
         known_exception = ESign::ERROR_CODE[ex.faultCode]
 
         if known_exception
@@ -47,7 +51,7 @@ module ESign
             callback.call(ex)
           end
         else
-          nil
+          raise ex
         end
       end
     end
