@@ -5,6 +5,6 @@ VCR.configure do |config|
   config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
   config.hook_into :webmock
 
-  config.filter_sensitive_data("<UNIVERSIGN_LOGIN>") { Rails.application.secrets.e_sign_login }
-  config.filter_sensitive_data("<UNIVERSIGN_PASSWORD>") { Rails.application.secrets.e_sign_password }
+  config.filter_sensitive_data("<UNIVERSIGN_LOGIN>") { ENV['UNIVERSIGN_LOGIN'] }
+  config.filter_sensitive_data("<UNIVERSIGN_PASSWORD>") { ENV['UNIVERSIGN_PASSWORD'] }
 end

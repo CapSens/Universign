@@ -10,6 +10,8 @@ module ESign
       @transaction_id = transaction_id
       @url            = url
       @data           = {}
+
+      self.get
     end
 
     def from_data(data)
@@ -87,10 +89,7 @@ module ESign
     #
     # @return [Boolean]
     def signed?
-      @signed ||= begin
-        status == 'completed'
-        # || !result['signerInfos'].any? { |signer| signer['status'] != 'signed' }
-      end
+      @signed ||= status == 'completed'
     end
 
     ########################
