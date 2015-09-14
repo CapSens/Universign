@@ -13,7 +13,7 @@ module ESign
     # @option options [String] :name Name of the PDF
     # @option options [Hash] :meta_data Hash to join to the PDF
     def initialize(options = {})
-      @params = {}
+      @params = HashWithIndifferentAccess.new
 
       options.each do |key, value|
         send("#{key}=", value)
@@ -28,7 +28,7 @@ module ESign
       @params = data
 
       document = ESign::Document.new
-      document.params = @params
+      document.params.merge!(@params)
       document
     end
 
@@ -36,7 +36,7 @@ module ESign
     #
     # @return [Array<Byte>]
     def content
-      @content ||= params[:content]
+      @content ||= params['content']
     end
 
     def content=(data)

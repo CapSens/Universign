@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash/indifferent_access'
+
 require "e_sign/version"
 require 'xmlrpc/client'
 require 'e_sign/service/document'
@@ -12,8 +14,6 @@ require 'e_sign/client'
 require 'e_sign/document'
 require 'e_sign/configuration'
 require 'e_sign/error'
-
-
 
 module ESign
   include Error

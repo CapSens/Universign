@@ -17,3 +17,11 @@ RSpec.configure do |config|
     end
   end
 end
+
+def restore_default_config
+  ESign.configure do |config|
+    config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
+    config.login    = ENV['UNIVERSIGN_LOGIN']
+    config.password = ENV['UNIVERSIGN_PASSWORD']
+  end
+end

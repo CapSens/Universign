@@ -49,7 +49,13 @@ describe ESign::Document do
     it 'sets param = data' do
       document = described_class.from_data(data)
 
-      expect(document.params).to eql(data)
+      expect(document.params).to eql(HashWithIndifferentAccess.new(data))
+    end
+
+    it 'keep the HashWithIndifferentAccess' do
+      document = described_class.from_data(data)
+
+      expect(document.params.class).to eql HashWithIndifferentAccess
     end
   end
 end

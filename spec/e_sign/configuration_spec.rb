@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe ESign::Configuration do
+  after { restore_default_config }
   context 'when endpoint is specified' do
     let(:endpoint) { 'http://my-url.com' }
 
