@@ -8,7 +8,8 @@ module ESign
         certificate_type:           :certificateType,
         language:                   :language,
         identification_type:        :identificationType,
-        handwritten_signature:      :handwrittenSignature
+        handwritten_signature:      :handwrittenSignature,
+        profile:                    :profile
       }
 
       DEFAULT_OPTIONS = {
@@ -47,6 +48,7 @@ module ESign
         # @option options: [String] :language Document's language
         # @option options: [String] :identification_type
         # @option options: [Boolean] :handwritten_signature
+        # @option options: [String]   :profile
         #
         # @raise [ArgumentError] Raised if unknown_key passed in options
         #
@@ -70,7 +72,7 @@ module ESign
           end
 
           safeguard do
-            result = @client.call("requester.requestTransaction", sign_options.merge(options))
+            result = @client.call("requester.requestTransaction", sign_options)
             ESign::Transaction.new(result['id'], result['url'])
           end
         end
