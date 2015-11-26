@@ -10,7 +10,8 @@ module ESign
         identification_type:        :identificationType,
         handwritten_signature:      :handwrittenSignature,
         profile:                    :profile,
-        final_doc_sent:             :finalDocSent
+        final_doc_sent:             :finalDocSent,
+        final_doc_requester_sent:   :finalDocRequesterSent
       }
 
       DEFAULT_OPTIONS = {
@@ -51,6 +52,7 @@ module ESign
         # @option options: [Boolean] :handwritten_signature
         # @option options: [String] :profile
         # @option options: [Boolean] :final_doc_sent
+        # @option options: [Boolean] :final_doc_requester_sent
         #
         # @raise [ArgumentError] Raised if unknown_key passed in options
         #
