@@ -9,7 +9,9 @@ module ESign
         language:                   :language,
         identification_type:        :identificationType,
         handwritten_signature:      :handwrittenSignature,
-        profile:                    :profile
+        profile:                    :profile,
+        final_doc_sent:             :finalDocSent,
+        final_doc_requester_sent:   :finalDocRequesterSent
       }
 
       DEFAULT_OPTIONS = {
@@ -48,7 +50,9 @@ module ESign
         # @option options: [String] :language Document's language
         # @option options: [String] :identification_type
         # @option options: [Boolean] :handwritten_signature
-        # @option options: [String]   :profile
+        # @option options: [String] :profile
+        # @option options: [Boolean] :final_doc_sent
+        # @option options: [Boolean] :final_doc_requester_sent
         #
         # @raise [ArgumentError] Raised if unknown_key passed in options
         #
