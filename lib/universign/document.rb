@@ -1,11 +1,11 @@
-module ESign
+module Universign
   class Document
-    include ESign::Safeguard
+    include Universign::Safeguard
 
     attr_reader :name, :file_content, :file_url
     attr_accessor :params
 
-    # Create a new ESign::Document
+    # Create a new Universign::Document
     #
     # @param [Hash] options
     # @option options [Array<Byte>] :content Content of the PDF
@@ -23,11 +23,11 @@ module ESign
     # Create a new document from a Hash
     #
     # @param [Hash] data
-    # @return [Esign::Document]
+    # @return [Universign::Document]
     def self.from_data(data)
       @params = data
 
-      document = ESign::Document.new
+      document = Universign::Document.new
       document.params.merge!(@params)
       document
     end

@@ -1,4 +1,4 @@
-module ESign
+module Universign
   class TransactionSigner < Signer
     attr_accessor :phone_number, :signature, :callbacks
 
@@ -54,9 +54,9 @@ module ESign
     # provided, no signature field will be produced on the
     # signed document
     #
-    # @params [ESign::SignatureField] data
+    # @params [Universign::SignatureField] data
     def signature_field=(data)
-      if !data.instance_of?(ESign::SignatureField)
+      if !data.instance_of?(Universign::SignatureField)
         raise 'BadSignatureFieldType' # TODO: create custom Exception
       end
 
@@ -74,7 +74,7 @@ module ESign
     end
 
     # The url to where the signer will be  redirected, after the signatures are completed.
-    # If it is null it takes the value of {ESign::Transaction#success_url}
+    # If it is null it takes the value of {Universign::Transaction#success_url}
     # If it is also null, it takes the default Universign success URL
     def success_url=(data)
       @success_url        = data

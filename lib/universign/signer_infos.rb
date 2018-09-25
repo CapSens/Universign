@@ -1,5 +1,5 @@
-module ESign
-  class SignerInfos < ESign::Signer
+module Universign
+  class SignerInfos < Signer
     # The status of the signer
     #
     # The existing statuses are:

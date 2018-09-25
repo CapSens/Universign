@@ -1,20 +1,20 @@
-# ESign
+# Universign
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'e_sign', git: 'git@projects.capsens.eu:rails-plugins/e_sign.git'
+gem 'universign', git: 'git@projects.capsens.eu:rails-plugins/universign.git'
 ```
 
 ## TL;DR
 
 
-In `config/initializers/e_sign.rb`:
+In `config/initializers/universign.rb`:
 
 ```ruby
-ESign.configure do |config|
+Universign.configure do |config|
   config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
   config.login    = ENV['UNIVERSIGN_LOGIN']
   config.password = ENV['UNIVERSIGN_PASSWORD']
@@ -23,18 +23,18 @@ end
 
 
 ```ruby
-document = ESign::Document.new(name: 'original_contract.pdf', url: self.original_contract.url)
-# document = ESign::Document.new(name: 'original_contract.pdf', content: File.open('path/to/file').read)
+document = Universign::Document.new(name: 'original_contract.pdf', url: self.original_contract.url)
+# document = Universign::Document.new(name: 'original_contract.pdf', content: File.open('path/to/file').read)
 
-contributor_signer = ESign::TransactionSigner.new(
+contributor_signer = Universign::TransactionSigner.new(
   first_name:   "Signer's first name",
   last_name:    "Signer's last name",
   phone_number: "0101010101",
   success_url:  "http://success-url.con/",
-  signature:    ESign::SignatureField.new(coordinate: [20, 20], page: 1)
+  signature:    Universign::SignatureField.new(coordinate: [20, 20], page: 1)
 )
 
-transaction = ESign::Transaction.create(
+transaction = Universign::Transaction.create(
   documents: [original_contract],
   signers: [contributor_signer]
 )
@@ -48,7 +48,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/e_sign. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/universign. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License

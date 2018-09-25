@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ESign::Document do
+describe Universign::Document do
   describe '.new' do
     it 'sets a variable + a params in Universign format' do
       [
@@ -20,7 +20,7 @@ describe ESign::Document do
       it 'raises an exception' do
         expect {
           described_class.new(meta_data: 1)
-        }.to raise_error(ESign::Document::MetaDataMustBeAHash)
+        }.to raise_error(Universign::Document::MetaDataMustBeAHash)
       end
     end
 

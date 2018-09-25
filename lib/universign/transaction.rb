@@ -1,6 +1,6 @@
-module ESign
+module Universign
   class Transaction
-    include ESign::Safeguard
+    include Universign::Safeguard
     include Service::Transaction
     include Service::Document
 
@@ -43,7 +43,7 @@ module ESign
     # A list of bean containing information about the signers
     # and their progression in the signature process
     #
-    # @return [Array<ESign::Signer]
+    # @return [Array<Universign::Signer]
     def signers
       raise 'NotImplementedYet'
     end
@@ -97,7 +97,7 @@ module ESign
     private
 
     def client
-      @client ||= ESign::Client.new.client
+      @client ||= Universign::Client.new.client
     end
   end
 end

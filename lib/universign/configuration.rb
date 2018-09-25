@@ -1,4 +1,4 @@
-module ESign
+module Universign
   class Configuration
     attr_accessor :login, :password, :endpoint
 
@@ -9,13 +9,13 @@ module ESign
     end
   end
 
-  # @return [ESign::Configuration] ESign's current configuration
+  # @return [Universign::Configuration] ESign's current configuration
   def self.configuration
     @configuration ||= Configuration.new
   end
 
   # Set ESign's configuration
-  # @param config [ESign::Configuration]
+  # @param config [Universign::Configuration]
   def self.configuration=(config)
     @configuration = config
   end

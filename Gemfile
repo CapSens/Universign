@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in e_sign.gemspec
+# Specify your gem's dependencies in universign.gemspec
 gemspec
