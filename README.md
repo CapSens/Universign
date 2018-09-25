@@ -55,3 +55,8 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
+
+
+## notes
+
+final_doc_sent: pour que le document soit envoyé par mail au signataire

@@ -9,21 +9,21 @@ module Universign
     end
   end
 
-  # @return [Universign::Configuration] ESign's current configuration
+  # @return [Universign::Configuration] Universign's current configuration
   def self.configuration
     @configuration ||= Configuration.new
   end
 
-  # Set ESign's configuration
+  # Set Universign's configuration
   # @param config [Universign::Configuration]
   def self.configuration=(config)
     @configuration = config
   end
 
-  # Modify ESign's current configuration
-  # @yieldparam [ESign::Configuration] config current ESign config
+  # Modify Universign's current configuration
+  # @yieldparam [Universign::Configuration] config current Universign config
   # ```
-  # ESign.configure do |config|
+  # Universign.configure do |config|
   #   config.login = "your-mail@provider.com"
   # end
   # ```

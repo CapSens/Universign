@@ -60,15 +60,15 @@ module Universign
         def create(documents:, signers:, options: {})
           @client = Universign::Client.instance
 
-          sign_options = DEFAULT_OPTIONS.merge({
+          sign_options = DEFAULT_OPTIONS.merge(
             documents: documents.map(&:params),
             signers:   signers.map(&:params),
-          })
+          )
 
           options.each do |key, value|
             known_key = AVAILABLE_OPTIONS[key]
 
-            if known_key.present?
+            if known_key
               sign_options[known_key] = value
             else
               raise "Unknown Key"
