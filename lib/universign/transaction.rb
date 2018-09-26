@@ -35,9 +35,7 @@ module Universign
 
     # @return [Array<String>]
     def url
-      @url ||= begin
-        data['signerInfos'].map { |si| si['url'] }
-      end
+      @url ||= data['signerInfos'].map { |si| si['url'] }
     end
 
     # A list of bean containing information about the signers
@@ -89,7 +87,7 @@ module Universign
     #
     # @return [Boolean]
     def signed?
-      @signed ||= status == 'completed'
+      status == 'completed'
     end
 
     ########################
