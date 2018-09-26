@@ -135,7 +135,7 @@ Once your transaction is created:
 
 ## Universign documentation
 
-As of September 25th 2018, all official Universign documentation can be found at [https://help.universign.com/hc/fr/sections/360000148149-Guides-Universign]().
+As of September 25th 2018, all official Universign documentation can be found at https://help.universign.com/hc/fr/sections/360000148149-Guides-Universign.
 
 ## Development
 
