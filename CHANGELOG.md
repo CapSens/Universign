@@ -1,3 +1,8 @@
+v???
+-------------------------
+
+- rename gem to `ruby_universign` and `ESign` module to `Universign`
+
 v0.1.6 (26/11/2015)
 -------------------------
 

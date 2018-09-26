@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ESign::Client do
+describe Universign::Client do
   describe 'it is a singleton' do
     it "can't be initiated with new" do
       expect {

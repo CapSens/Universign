@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "e_sign"
+require "universign"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
@@ -13,7 +13,7 @@ require 'dotenv'
 
 Dotenv.load
 
-ESign.configure do |config|
+Universign.configure do |config|
   config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
   config.login    = ENV['UNIVERSIGN_LOGIN']
   config.password = ENV['UNIVERSIGN_PASSWORD']

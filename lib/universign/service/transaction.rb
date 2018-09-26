@@ -1,4 +1,4 @@
-module ESign
+module Universign
   module Service
     module Transaction
       AVAILABLE_OPTIONS = {
@@ -23,9 +23,9 @@ module ESign
 
       # Get a transaction from Universign
       #
-      # @return [ESign::Transaction]
+      # @return [Universign::Transaction]
       def get
-        @client = ESign::Client.instance
+        @client = Universign::Client.instance
 
         safeguard do
           result = @client.call('requester.getTransactionInfo', @transaction_id)
@@ -40,8 +40,8 @@ module ESign
       module ClassMethods
         # Signs a document
         #
-        # @param [Array<ESign::Document>] documents Documents to sign
-        # @param [Array<ESign::SignerTransaction>] signers
+        # @param [Array<Universign::Document>] documents Documents to sign
+        # @param [Array<Universign::SignerTransaction>] signers
         # @param [Hash] options
         # @option options: [String] :custom_id Custom ID of the document
         # @option options: [String] :description Description of the signature
@@ -56,19 +56,19 @@ module ESign
         #
         # @raise [ArgumentError] Raised if unknown_key passed in options
         #
-        # @return [ESign::Transaction]
+        # @return [Universign::Transaction]
         def create(documents:, signers:, options: {})
-          @client = ESign::Client.instance
+          @client = Universign::Client.instance
 
-          sign_options = DEFAULT_OPTIONS.merge({
+          sign_options = DEFAULT_OPTIONS.merge(
             documents: documents.map(&:params),
             signers:   signers.map(&:params),
-          })
+          )
 
           options.each do |key, value|
             known_key = AVAILABLE_OPTIONS[key]
 
-            if known_key.present?
+            if known_key
               sign_options[known_key] = value
             else
               raise "Unknown Key"
@@ -77,7 +77,7 @@ module ESign
 
           safeguard do
             result = @client.call("requester.requestTransaction", sign_options)
-            ESign::Transaction.new(result['id'], result['url'])
+            Universign::Transaction.new(result['id'], result['url'])
           end
         end
       end

@@ -1,14 +1,14 @@
 require 'singleton'
 
-module ESign
+module Universign
   class Client
     include ::Singleton
     attr_reader :client
 
     def initialize
-      @client          = XMLRPC::Client.new2(ESign.configuration.endpoint)
-      @client.user     = ESign.configuration.login
-      @client.password = ESign.configuration.password
+      @client          = XMLRPC::Client.new2(Universign.configuration.endpoint)
+      @client.user     = Universign.configuration.login
+      @client.password = Universign.configuration.password
     end
 
     def method_missing(method, *args, &block)

@@ -1,4 +1,4 @@
-module ESign
+module Universign
   class Signer
     attr_accessor :params
 

@@ -1,4 +1,4 @@
-module ESign
+module Universign
   class SignatureField
     attr_reader :params
 

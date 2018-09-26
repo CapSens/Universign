@@ -1,6 +1,6 @@
-module ESign
+module Universign
   class Transaction
-    include ESign::Safeguard
+    include Universign::Safeguard
     include Service::Transaction
     include Service::Document
 
@@ -35,15 +35,13 @@ module ESign
 
     # @return [Array<String>]
     def url
-      @url ||= begin
-        data['signerInfos'].map { |si| si['url'] }
-      end
+      @url ||= data['signerInfos'].map { |si| si['url'] }
     end
 
     # A list of bean containing information about the signers
     # and their progression in the signature process
     #
-    # @return [Array<ESign::Signer]
+    # @return [Array<Universign::Signer]
     def signers
       raise 'NotImplementedYet'
     end
@@ -89,7 +87,7 @@ module ESign
     #
     # @return [Boolean]
     def signed?
-      @signed ||= status == 'completed'
+      status == 'completed'
     end
 
     ########################
@@ -97,7 +95,7 @@ module ESign
     private
 
     def client
-      @client ||= ESign::Client.new.client
+      @client ||= Universign::Client.new.client
     end
   end
 end

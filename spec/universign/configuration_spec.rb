@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe ESign::Configuration do
+describe Universign::Configuration do
   after { restore_default_config }
   context 'when endpoint is specified' do
     let(:endpoint) { 'http://my-url.com' }
 
     before do
-      ESign.configure do |config|
+      Universign.configure do |config|
         config.endpoint = endpoint
       end
     end
 
     it 'returns the endpoint' do
-      expect(ESign.configuration.endpoint).to eql(endpoint)
+      expect(Universign.configuration.endpoint).to eql(endpoint)
     end
   end
 
@@ -20,13 +20,13 @@ describe ESign::Configuration do
     let(:login) { 'my-mail@provider.com' }
 
     before do
-      ESign.configure do |config|
+      Universign.configure do |config|
         config.login = login
       end
     end
 
     it 'returns the login' do
-      expect(ESign.configuration.login).to eql(login)
+      expect(Universign.configuration.login).to eql(login)
     end
   end
 
@@ -34,13 +34,13 @@ describe ESign::Configuration do
     let(:password) { 'my-mail@provider.com' }
 
     before do
-      ESign.configure do |config|
+      Universign.configure do |config|
         config.password = password
       end
     end
 
     it 'returns the password' do
-      expect(ESign.configuration.password).to eql(password)
+      expect(Universign.configuration.password).to eql(password)
     end
   end
 end

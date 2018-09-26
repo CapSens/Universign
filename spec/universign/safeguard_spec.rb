@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe ESign::Safeguard do
-  let(:dummy_class) { Class.new { include ESign::Safeguard } }
+describe Universign::Safeguard do
+  let(:dummy_class) { Class.new { include Universign::Safeguard } }
 
   context 'exception is RuntimeError' do
     context "The message include 'Authorization failed'" do
@@ -10,7 +10,7 @@ describe ESign::Safeguard do
           dummy_class.safeguard do
             raise RuntimeError, 'Authorization failed'
           end
-        }.to raise_error ESign::Client::InvalidCredentials
+        }.to raise_error Universign::Client::InvalidCredentials
       end
     end
 
@@ -40,10 +40,10 @@ describe ESign::Safeguard do
       it 'raises the known exception' do
         [
           # faultCode    # Exception
-          [73002,        ESign::Client::ErrorWhenSigningPDF],
-          [73010,        ESign::Client::InvalidCredentials],
-          [73025,        ESign::Document::UnknownDocument],
-          [73027,        ESign::Document::NotSigned]
+          [73002, Universign::Client::ErrorWhenSigningPDF],
+          [73010, Universign::Client::InvalidCredentials],
+          [73025, Universign::Document::UnknownDocument],
+          [73027, Universign::Document::NotSigned]
         ].each do |error|
           expect {
             dummy_class.safeguard do
@@ -58,10 +58,10 @@ describe ESign::Safeguard do
       it 'raises the known exception' do
         [
           # faultString                               # Exception
-          ['Error on document download for this URL', ESign::Document::DocumentURLInvalid],
-          ['Invalid document URL',                    ESign::Document::DocumentURLInvalid],
-          ['Not enough tokens',                       ESign::NotEnoughTokens],
-          ['ID is unknown',                           ESign::Document::UnknownDocument]
+          ['Error on document download for this URL', Universign::Document::DocumentURLInvalid],
+          ['Invalid document URL', Universign::Document::DocumentURLInvalid],
+          ['Not enough tokens', Universign::NotEnoughTokens],
+          ['ID is unknown', Universign::Document::UnknownDocument]
         ].each do |error|
           expect {
             dummy_class.safeguard do
