@@ -4,7 +4,7 @@ RubyUniversign is a Ruby gem for interacting with [Universign](https://www.unive
 
 It ease requests to Universign API, documents uploads and following signature state.
 
-This gem is **not** officialy made by Universign, but was originally created for [CapSens](https://capsens.eu/) internal usage.
+This gem is **not** officialy made by Universign, but was originally created by [CapSens](https://capsens.eu/) for internal usage.
 
 This gem currently integrate electronic signature service, but not other Universign services (timestamping and server stamp).
 

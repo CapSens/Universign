@@ -11,9 +11,9 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Universign's API Wrapper"
   spec.description   = <<~EOF
-    Ruby gem for interacting with [Universign](https://www.universign.com/) electronic signature API.
+    Ruby gem for interacting with Universign electronic signature API.
     It ease requests to Universign API, documents uploads and following signature state.
-    This gem is **not** officialy made by Universign, but was originally created for [CapSens](https://capsens.eu/) internal usage.
+    This gem is *not* officialy made by Universign, but was originally created by CapSens for internal usage.
   EOF
   spec.homepage      = "https://github.com/CapSens/universign"
   spec.license       = "MIT"
