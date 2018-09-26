@@ -77,10 +77,10 @@ transaction.url
 transaction.transaction_id
 # => "9696179e-a43d-4803-beeb-9e5c02fd159b"
 
-# get back universign transaction:
+# reload transaction data from universign:
 transaction = Universign::Transaction.new('9696179e-a43d-4803-beeb-9e5c02fd159b')
+# was the transaction signed by the user ?
 transaction.signed?
-
 ```
 
 ### `Universign::Document`
@@ -152,7 +152,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/CapSen
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-## notes
-
-final_doc_sent: pour que le document soit envoyé par mail au signataire
