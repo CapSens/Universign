@@ -91,6 +91,10 @@ It can be created with either your file's content or your file's url.
 
 Nothing much to say here. It follows Universign's signature field.
 
+You can pass the coordinates of the signature or the name of the field.
+
+If the PDF already contains a named signature field, you can use this parameter instead of giving the coordinates (which will be ignored). If the name of this field does not exist in the document, the given coordinates will be used instead.
+
 ### `Universign::TransactionSigner`
 
 * `success_url` is where your user will be redirected after signing the documents.

@@ -8,7 +8,7 @@ describe Universign::Transaction do
       email: 'test@gmail.com',
       # phone_number: "0132456789",
       success_url:  "http://success-url.com/",
-      signature:    Universign::SignatureField.new(coordinate: [20, 20], page: 1)
+      signature:    Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1)
     )
   end
 
