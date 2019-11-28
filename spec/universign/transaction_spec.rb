@@ -26,13 +26,13 @@ describe Universign::Transaction do
         email: 'test@gmail.com',
         # phone_number: "0132456789",
         success_url:  "http://success-url.com/",
-        signature:    Universign::SignatureField.new(coordinate: [20, 20], name: field_name, page: 1)
+        signature:    signature
       )
     end
 
     context 'with a named signature field' do
       let(:cassette) { 'transaction/create_with_named_field' }
-      let(:field_name) { 'test' }
+      let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1) }
 
       it 'Gets a valid url' do
         expect(subject.url).to match(/https:\/\/.*universign\.eu/)
@@ -41,7 +41,7 @@ describe Universign::Transaction do
 
     context 'with a coordinate signature field' do
       let(:cassette) { 'transaction/create_with_coordinate_field' }
-      let(:field_name) { nil }
+      let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], page: 1) }
 
       it 'Gets a valid url' do
         expect(subject.url).to match(/https:\/\/.*universign\.eu/)

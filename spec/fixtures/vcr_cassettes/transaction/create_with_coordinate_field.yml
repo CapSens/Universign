@@ -11736,7 +11736,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 28 Nov 2019 16:59:47 GMT
+      - Thu, 28 Nov 2019 17:03:21 GMT
       Server:
       - Apache
       Cache-Control:
@@ -11754,28 +11754,28 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Set-Cookie:
-      - CGSESSIONID=DEF8B02CA6EA4CFABA7F24585273DB078B29D10B;Path=/;Version=0
+      - CGSESSIONID=FA501C32C7383BBDE0F31E45F5A6445E6862B181;Path=/;Version=0
       Vary:
       - Accept-Encoding
       X-Ua-Compatible:
       - IE=Edge
+      Content-Length:
+      - '238'
       Keep-Alive:
       - timeout=5, max=100
       Connection:
       - Keep-Alive
-      Transfer-Encoding:
-      - chunked
     body:
       encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>id</name><value><string>e830248c-7458-4b5d-85df-9722a3953717</string></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=823f9533-135c-4b79-b4e9-0793a7281761</string></value></member></struct></value></param></params></methodResponse>
+      string: <?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>id</name><value><string>dc51eda4-aa21-4ac6-9333-fdbff38f6bc1</string></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=7c1f924b-b669-4c89-adde-bf6aded458e6</string></value></member></struct></value></param></params></methodResponse>
     http_version: 
-  recorded_at: Thu, 28 Nov 2019 16:59:45 GMT
+  recorded_at: Thu, 28 Nov 2019 17:03:19 GMT
 - request:
     method: post
     uri: https://sign.test.cryptolog.com/sign/rpc/
     body:
       encoding: UTF-8
-      string: '<?xml version="1.0" ?><methodCall><methodName>requester.getTransactionInfo</methodName><params><param><value><string>e830248c-7458-4b5d-85df-9722a3953717</string></value></param></params></methodCall>
+      string: '<?xml version="1.0" ?><methodCall><methodName>requester.getTransactionInfo</methodName><params><param><value><string>dc51eda4-aa21-4ac6-9333-fdbff38f6bc1</string></value></param></params></methodCall>
 
 '
     headers:
@@ -11788,7 +11788,7 @@ http_interactions:
       Connection:
       - keep-alive
       Cookie:
-      - CGSESSIONID=DEF8B02CA6EA4CFABA7F24585273DB078B29D10B
+      - CGSESSIONID=FA501C32C7383BBDE0F31E45F5A6445E6862B181
       Authorization:
       - Basic ZGV2ZWxvcG1lbnRAY2Fwc2Vucy5ldTplb0JGakhuYjI4WXA=
       Accept-Encoding:
@@ -11801,7 +11801,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 28 Nov 2019 16:59:47 GMT
+      - Thu, 28 Nov 2019 17:03:21 GMT
       Server:
       - Apache
       Cache-Control:
@@ -11822,17 +11822,17 @@ http_interactions:
       - Accept-Encoding
       X-Ua-Compatible:
       - IE=Edge
+      Content-Length:
+      - '499'
       Keep-Alive:
       - timeout=5, max=100
       Connection:
       - Keep-Alive
-      Transfer-Encoding:
-      - chunked
     body:
       encoding: UTF-8
       string: <?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>signerInfos</name><value><array><data><value><struct><member><name>firstName</name><value><string>Signer's
         first name</string></value></member><member><name>lastName</name><value><string>Signer's
-        last name</string></value></member><member><name>id</name><value><string>823f9533-135c-4b79-b4e9-0793a7281761</string></value></member><member><name>certificateInfo</name><value><struct></struct></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=823f9533-135c-4b79-b4e9-0793a7281761</string></value></member><member><name>email</name><value><string>test@gmail.com</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></data></array></value></member><member><name>currentSigner</name><value><i4>0</i4></value></member><member><name>eachField</name><value><boolean>0</boolean></value></member><member><name>creationDate</name><value><dateTime.iso8601>20191128T16:59:47</dateTime.iso8601></value></member><member><name>signerCertificates</name><value><array><data><value><struct></struct></value></data></array></value></member><member><name>initiatorInfo</name><value><struct><member><name>firstName</name><value><string>CapSens</string></value></member><member><name>lastName</name><value><string>CapSens</string></value></member><member><name>email</name><value><string><UNIVERSIGN_LOGIN></string></value></member></struct></value></member><member><name>transactionId</name><value><string>e830248c-7458-4b5d-85df-9722a3953717</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></param></params></methodResponse>
+        last name</string></value></member><member><name>id</name><value><string>7c1f924b-b669-4c89-adde-bf6aded458e6</string></value></member><member><name>certificateInfo</name><value><struct></struct></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=7c1f924b-b669-4c89-adde-bf6aded458e6</string></value></member><member><name>email</name><value><string>test@gmail.com</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></data></array></value></member><member><name>currentSigner</name><value><i4>0</i4></value></member><member><name>eachField</name><value><boolean>0</boolean></value></member><member><name>creationDate</name><value><dateTime.iso8601>20191128T17:03:21</dateTime.iso8601></value></member><member><name>signerCertificates</name><value><array><data><value><struct></struct></value></data></array></value></member><member><name>initiatorInfo</name><value><struct><member><name>firstName</name><value><string>CapSens</string></value></member><member><name>lastName</name><value><string>CapSens</string></value></member><member><name>email</name><value><string><UNIVERSIGN_LOGIN></string></value></member></struct></value></member><member><name>transactionId</name><value><string>dc51eda4-aa21-4ac6-9333-fdbff38f6bc1</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></param></params></methodResponse>
     http_version: 
-  recorded_at: Thu, 28 Nov 2019 16:59:45 GMT
+  recorded_at: Thu, 28 Nov 2019 17:03:19 GMT
 recorded_with: VCR 4.0.0
