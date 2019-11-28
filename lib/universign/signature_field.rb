@@ -13,7 +13,7 @@ module Universign
         y:    @coordinate[1]
       }
 
-      @params[:name] = @name if @name.present?
+      @params[:name] = @name unless @name.nil?
 
       @params
     end
