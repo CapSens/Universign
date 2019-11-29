@@ -11714,14 +11714,14 @@ http_interactions:
         CQefYIZED/1+oGfsINDjRU4TKj7Ru6+HXi87SUz0lpHipB/oeSexCYlNhgH5
         S0Yt+/eOwAqj68H/8JtDhAplbmRzdHJlYW0KZW5kb2JqCnN0YXJ0eHJlZgo1
         MjU0MTkKJSVFT0YK
-        </base64></value></member></struct></value></data></array></value></member><member><name>signers</name><value><array><data><value><struct><member><name>firstname</name><value><string>Signer's first name</string></value></member><member><name>lastname</name><value><string>Signer's last name</string></value></member><member><name>successURL</name><value><string>http://success-url.com/</string></value></member></struct></value></data></array></value></member></struct></value></param></params></methodCall>
+        </base64></value></member></struct></value></data></array></value></member><member><name>signers</name><value><array><data><value><struct><member><name>firstname</name><value><string>Signer's first name</string></value></member><member><name>lastname</name><value><string>Signer's last name</string></value></member><member><name>emailAddress</name><value><string>test@gmail.com</string></value></member><member><name>successURL</name><value><string>http://success-url.com/</string></value></member></struct></value></data></array></value></member><member><name>profile</name><value><string>default</string></value></member><member><name>finalDocSent</name><value><boolean>1</boolean></value></member></struct></value></param></params></methodCall>
     headers:
       User-Agent:
-      - XMLRPC::Client (Ruby 2.3.3)
+      - XMLRPC::Client (Ruby 2.5.3)
       Content-Type:
       - text/xml; charset=utf-8
       Content-Length:
-      - '715281'
+      - '715522'
       Connection:
       - keep-alive
       Authorization:
@@ -11735,20 +11735,16 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
       Date:
-      - Tue, 25 Sep 2018 16:35:23 GMT
-      Content-Type:
-      - text/xml
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Thu, 28 Nov 2019 17:03:40 GMT
+      Server:
+      - Apache
       Cache-Control:
       - no-cache
       Pragma:
       - no-cache
+      Content-Type:
+      - text/xml
       X-Frame-Options:
       - DENY
       Strict-Transport-Security:
@@ -11757,28 +11753,42 @@ http_interactions:
       - nosniff
       X-Xss-Protection:
       - 1; mode=block
+      Set-Cookie:
+      - CGSESSIONID=1ECA67CEDAD0EEBCE60C0C5997A16CC459A0133F;Path=/;Version=0
+      Vary:
+      - Accept-Encoding
+      X-Ua-Compatible:
+      - IE=Edge
+      Content-Length:
+      - '240'
+      Keep-Alive:
+      - timeout=5, max=100
+      Connection:
+      - Keep-Alive
     body:
       encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>id</name><value><string>a8ab0d27-a4da-4370-be1e-bf052a0f085e</string></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=c2be15e3-f2ea-48c8-b9ac-d694848d6a33</string></value></member></struct></value></param></params></methodResponse>
+      string: <?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>id</name><value><string>3db720fe-b658-4df1-9669-be7399eae508</string></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=f4d621b1-e18a-41bc-850c-a252c659d2f7</string></value></member></struct></value></param></params></methodResponse>
     http_version: 
-  recorded_at: Tue, 25 Sep 2018 16:35:23 GMT
+  recorded_at: Thu, 28 Nov 2019 17:03:38 GMT
 - request:
     method: post
     uri: https://sign.test.cryptolog.com/sign/rpc/
     body:
       encoding: UTF-8
-      string: '<?xml version="1.0" ?><methodCall><methodName>requester.getTransactionInfo</methodName><params><param><value><string>a8ab0d27-a4da-4370-be1e-bf052a0f085e</string></value></param></params></methodCall>
+      string: '<?xml version="1.0" ?><methodCall><methodName>requester.getTransactionInfo</methodName><params><param><value><string>3db720fe-b658-4df1-9669-be7399eae508</string></value></param></params></methodCall>
 
 '
     headers:
       User-Agent:
-      - XMLRPC::Client (Ruby 2.3.3)
+      - XMLRPC::Client (Ruby 2.5.3)
       Content-Type:
       - text/xml; charset=utf-8
       Content-Length:
       - '201'
       Connection:
       - keep-alive
+      Cookie:
+      - CGSESSIONID=1ECA67CEDAD0EEBCE60C0C5997A16CC459A0133F
       Authorization:
       - Basic ZGV2ZWxvcG1lbnRAY2Fwc2Vucy5ldTplb0JGakhuYjI4WXA=
       Accept-Encoding:
@@ -11790,20 +11800,16 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx
       Date:
-      - Tue, 25 Sep 2018 16:35:23 GMT
-      Content-Type:
-      - text/xml
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
+      - Thu, 28 Nov 2019 17:03:40 GMT
+      Server:
+      - Apache
       Cache-Control:
       - no-cache
       Pragma:
       - no-cache
+      Content-Type:
+      - text/xml
       X-Frame-Options:
       - DENY
       Strict-Transport-Security:
@@ -11812,11 +11818,21 @@ http_interactions:
       - nosniff
       X-Xss-Protection:
       - 1; mode=block
+      Vary:
+      - Accept-Encoding
+      X-Ua-Compatible:
+      - IE=Edge
+      Content-Length:
+      - '501'
+      Keep-Alive:
+      - timeout=5, max=100
+      Connection:
+      - Keep-Alive
     body:
       encoding: UTF-8
       string: <?xml version="1.0" encoding="UTF-8"?><methodResponse><params><param><value><struct><member><name>signerInfos</name><value><array><data><value><struct><member><name>firstName</name><value><string>Signer's
         first name</string></value></member><member><name>lastName</name><value><string>Signer's
-        last name</string></value></member><member><name>certificateInfo</name><value><struct></struct></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=c2be15e3-f2ea-48c8-b9ac-d694848d6a33</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></data></array></value></member><member><name>currentSigner</name><value><i4>0</i4></value></member><member><name>eachField</name><value><boolean>0</boolean></value></member><member><name>creationDate</name><value><dateTime.iso8601>20180925T16:35:23</dateTime.iso8601></value></member><member><name>signerCertificates</name><value><array><data><value><struct></struct></value></data></array></value></member><member><name>initiatorInfo</name><value><struct><member><name>firstName</name><value><string>CapSens</string></value></member><member><name>lastName</name><value><string>CapSens</string></value></member><member><name>email</name><value><string><UNIVERSIGN_LOGIN></string></value></member></struct></value></member><member><name>transactionId</name><value><string>a8ab0d27-a4da-4370-be1e-bf052a0f085e</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></param></params></methodResponse>
+        last name</string></value></member><member><name>id</name><value><string>f4d621b1-e18a-41bc-850c-a252c659d2f7</string></value></member><member><name>certificateInfo</name><value><struct></struct></value></member><member><name>url</name><value><string>https://sign.test.universign.eu/fr/signature/?id=f4d621b1-e18a-41bc-850c-a252c659d2f7</string></value></member><member><name>email</name><value><string>test@gmail.com</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></data></array></value></member><member><name>currentSigner</name><value><i4>0</i4></value></member><member><name>eachField</name><value><boolean>0</boolean></value></member><member><name>creationDate</name><value><dateTime.iso8601>20191128T17:03:40</dateTime.iso8601></value></member><member><name>signerCertificates</name><value><array><data><value><struct></struct></value></data></array></value></member><member><name>initiatorInfo</name><value><struct><member><name>firstName</name><value><string>CapSens</string></value></member><member><name>lastName</name><value><string>CapSens</string></value></member><member><name>email</name><value><string><UNIVERSIGN_LOGIN></string></value></member></struct></value></member><member><name>transactionId</name><value><string>3db720fe-b658-4df1-9669-be7399eae508</string></value></member><member><name>status</name><value><string>ready</string></value></member></struct></value></param></params></methodResponse>
     http_version: 
-  recorded_at: Tue, 25 Sep 2018 16:35:23 GMT
+  recorded_at: Thu, 28 Nov 2019 17:03:38 GMT
 recorded_with: VCR 4.0.0
