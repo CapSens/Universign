@@ -14,10 +14,12 @@ describe Universign::Transaction do
         Universign::Transaction.create(
           documents: [document],
           signers:   [signer],
-          options: { profile: 'default', final_doc_sent: true }
+          options: options
         )
       end
     end
+
+    let(:options) { { profile: 'default', final_doc_sent: true } }
 
     let(:signer) do
       Universign::TransactionSigner.new(
