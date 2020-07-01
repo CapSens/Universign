@@ -14,10 +14,12 @@ describe Universign::Transaction do
         Universign::Transaction.create(
           documents: [document],
           signers:   [signer],
-          options: { profile: 'default', final_doc_sent: true }
+          options: options
         )
       end
     end
+
+    let(:options) { { profile: 'default', final_doc_sent: true } }
 
     let(:signer) do
       Universign::TransactionSigner.new(
@@ -33,6 +35,20 @@ describe Universign::Transaction do
     context 'with a named signature field' do
       let(:cassette) { 'transaction/create_with_named_field' }
       let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1) }
+
+      it 'Gets a valid url' do
+        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
+      end
+    end
+
+    context 'with a named signature and a chaining mode fields' do
+      let(:cassette) { 'transaction/create_with_chaining_mode_field' }
+      let(:options) do
+        { profile: 'default', final_doc_sent: true, chaining_mode: 'none' }
+      end
+      let(:signature) do
+        Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1)
+      end
 
       it 'Gets a valid url' do
         expect(subject.url).to match(/https:\/\/.*universign\.eu/)
