@@ -118,6 +118,7 @@ handwritten_signature
 profile
 final_doc_sent
 final_doc_requester_sent
+chaining_mode
 ```
 
 Default options are:
