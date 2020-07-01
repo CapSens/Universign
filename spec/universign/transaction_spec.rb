@@ -41,6 +41,20 @@ describe Universign::Transaction do
       end
     end
 
+    context 'with a named signature and a chaining mode fields' do
+      let(:cassette) { 'transaction/create_with_chaining_mode_field' }
+      let(:options) do
+        { profile: 'default', final_doc_sent: true, chaining_mode: 'none' }
+      end
+      let(:signature) do
+        Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1)
+      end
+
+      it 'Gets a valid url' do
+        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
+      end
+    end
+
     context 'with a coordinate signature field' do
       let(:cassette) { 'transaction/create_with_coordinate_field' }
       let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], page: 1) }
