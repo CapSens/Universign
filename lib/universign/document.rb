@@ -75,6 +75,19 @@ module Universign
       params['name'] = data
     end
 
+    def signature_fields=(data)
+      if !data.is_a?(Array)
+        raise 'SignatureFieldsMustBeAnArray'
+      end
+
+      @signature_fields = data
+      params['signatureFields'] = data.map do |d|
+        raise 'BadSignatureFieldType' unless d.instance_of?(SignatureField)
+
+        d.params
+      end
+    end
+
     # The meta data of the PDF document
     #
     # @return [Hash]
