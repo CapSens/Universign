@@ -1,17 +1,6 @@
 require 'spec_helper'
 
 describe Universign::Transaction do
-  let(:signer) do
-    Universign::TransactionSigner.new(
-      first_name:   "Signer's first name",
-      last_name:    "Signer's last name",
-      email: 'test@gmail.com',
-      # phone_number: "0132456789",
-      success_url:  "http://success-url.com/",
-      signature:    Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1)
-    )
-  end
-
   let(:document) do
     Universign::Document.new(
       name:    'original_contract.pdf',
@@ -20,16 +9,59 @@ describe Universign::Transaction do
   end
 
   describe ".create" do
-    it 'Gets a valid url' do
-      transaction = VCR.use_cassette('transaction/create') do
+    subject do
+      VCR.use_cassette(cassette) do
         Universign::Transaction.create(
           documents: [document],
           signers:   [signer],
-          options: { profile: 'default', final_doc_sent: true }
+          options: options
         )
       end
+    end
 
-      expect(transaction.url).to match(/https:\/\/.*universign\.eu/)
+    let(:options) { { profile: 'default', final_doc_sent: true } }
+
+    let(:signer) do
+      Universign::TransactionSigner.new(
+        first_name:   "Signer's first name",
+        last_name:    "Signer's last name",
+        email: 'test@gmail.com',
+        # phone_number: "0132456789",
+        success_url:  "http://success-url.com/",
+        signature:    signature
+      )
+    end
+
+    context 'with a named signature field' do
+      let(:cassette) { 'transaction/create_with_named_field' }
+      let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1) }
+
+      it 'Gets a valid url' do
+        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
+      end
+    end
+
+    context 'with a named signature and a chaining mode fields' do
+      let(:cassette) { 'transaction/create_with_chaining_mode_field' }
+      let(:options) do
+        { profile: 'default', final_doc_sent: true, chaining_mode: 'none' }
+      end
+      let(:signature) do
+        Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1)
+      end
+
+      it 'Gets a valid url' do
+        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
+      end
+    end
+
+    context 'with a coordinate signature field' do
+      let(:cassette) { 'transaction/create_with_coordinate_field' }
+      let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], page: 1) }
+
+      it 'Gets a valid url' do
+        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
+      end
     end
   end
 

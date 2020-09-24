@@ -2,7 +2,7 @@ module Universign
   class SignatureField
     attr_reader :params
 
-    def initialize(coordinate:, name:, page:, signer_index:)
+    def initialize(coordinate:, name: nil, page:, signer_index:)
       @coordinate   = coordinate || [0, 0]
       @name         = name
       @page         = page
@@ -10,11 +10,14 @@ module Universign
 
       @params = {
         page:          @page,
-        name:          @name,
         x:             @coordinate[0],
         y:             @coordinate[1],
         'signerIndex': @signer_index
       }
+
+      @params[:name] = @name unless @name.nil?
+
+      @params
     end
   end
 end

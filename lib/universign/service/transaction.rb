@@ -11,7 +11,8 @@ module Universign
         handwritten_signature:      :handwrittenSignature,
         profile:                    :profile,
         final_doc_sent:             :finalDocSent,
-        final_doc_requester_sent:   :finalDocRequesterSent
+        final_doc_requester_sent:   :finalDocRequesterSent,
+        chaining_mode:              :chainingMode
       }
 
       DEFAULT_OPTIONS = {
