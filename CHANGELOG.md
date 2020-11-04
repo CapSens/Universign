@@ -1,3 +1,8 @@
+v1.2.1
+-------------------------
+
+- Bumping rake development dependancy due to security issues
+
 v1.2.0
 -------------------------
 
