@@ -1,3 +1,8 @@
+v1.3.0
+-------------------------
+
+- Adding the possibility to configure proxy and timeout options for the XMLRPC Client
+
 v1.2.1
 -------------------------
 
