@@ -3,9 +3,11 @@ module Universign
     attr_accessor :login, :password, :endpoint
 
     def initialize
-      @login    = ''
-      @password = ''
-      @endpoint = ''
+      @login    = nil
+      @password = nil
+      @endpoint = nil
+      @proxy    = nil
+      @timeout  = nil
     end
   end
 
