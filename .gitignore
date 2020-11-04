@@ -9,3 +9,5 @@
 /tmp/
 .env
 .idea
+*.swp
+*.swo
