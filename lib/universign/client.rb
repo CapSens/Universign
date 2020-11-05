@@ -6,7 +6,11 @@ module Universign
     attr_reader :client
 
     def initialize
-      @client          = XMLRPC::Client.new2(Universign.configuration.endpoint)
+      @client          = XMLRPC::Client.new2(
+        Universign.configuration.endpoint,
+        Universign.configuration.proxy,
+        Universign.configuration.timeout
+      )
       @client.user     = Universign.configuration.login
       @client.password = Universign.configuration.password
     end

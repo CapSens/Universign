@@ -1,3 +1,13 @@
+v1.3.0
+-------------------------
+
+- Adding the possibility to configure proxy and timeout options for the XMLRPC Client
+
+v1.2.1
+-------------------------
+
+- Bumping rake development dependancy due to security issues
+
 v1.2.0
 -------------------------
 
