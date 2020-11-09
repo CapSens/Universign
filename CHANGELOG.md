@@ -1,7 +1,7 @@
 v1.3.1
 -------------------------
 
-- Fixing regression added on 1.3.0
+- Fixing regressions added
 
 v1.3.0 - NOT WORKING
 -------------------------
