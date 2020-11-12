@@ -1,4 +1,9 @@
-v1.3.0
+v1.3.1
+-------------------------
+
+- Fixing regressions added
+
+v1.3.0 - NOT WORKING
 -------------------------
 
 - Adding the possibility to configure proxy and timeout options for the XMLRPC Client

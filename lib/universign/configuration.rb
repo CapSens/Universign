@@ -1,6 +1,6 @@
 module Universign
   class Configuration
-    attr_accessor :login, :password, :endpoint
+    attr_accessor :login, :password, :endpoint, :proxy, :timeout
 
     def initialize
       @login    = nil
