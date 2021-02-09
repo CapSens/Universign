@@ -20,7 +20,7 @@ describe Universign::Document do
       it 'raises an exception' do
         expect {
           described_class.new(meta_data: 1)
-        }.to raise_error(Universign::Document::MetaDataMustBeAHash)
+        }.to raise_error(Universign::MetaDataMustBeAHash)
       end
     end
 

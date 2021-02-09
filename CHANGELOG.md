@@ -1,3 +1,7 @@
+v1.4.0
+-------------------------
+- Refactor and rename errors. They now all inherit from `Universign::Error`.
+
 v1.3.1
 -------------------------
 

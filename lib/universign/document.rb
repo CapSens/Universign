@@ -103,27 +103,5 @@ module Universign
       @meta_data         = data
       params['metaData'] = data
     end
-
-    #                          _   _
-    #   _____  _____ ___ _ __ | |_(_) ___  _ __  ___
-    #  / _ \ \/ / __/ _ \ '_ \| __| |/ _ \| '_ \/ __|
-    # |  __/>  < (_|  __/ |_) | |_| | (_) | | | \__ \
-    #  \___/_/\_\___\___| .__/ \__|_|\___/|_| |_|___/
-    #                   |_|
-    class UnknownDocument < StandardError; end
-    class NotSigned < StandardError; end
-    class MissingDocument < StandardError; end
-    class MetaDataMustBeAHash < StandardError; end
-    class DocumentURLInvalid < StandardError
-      attr_accessor :url
-
-      def initialize(url)
-        @url = url
-      end
-
-      def to_s
-        "Can't find document at '#{@url}''"
-      end
-    end
   end
 end
