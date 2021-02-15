@@ -28,7 +28,7 @@ module Universign
     end
 
     def to_s
-      "Can't find document at '#{@url}''"
+      "Can't find document at '#{@url}'"
     end
   end
 end
