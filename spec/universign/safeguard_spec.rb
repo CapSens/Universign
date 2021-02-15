@@ -10,7 +10,7 @@ describe Universign::Safeguard do
           dummy_class.safeguard do
             raise RuntimeError, 'Authorization failed'
           end
-        }.to raise_error Universign::Client::InvalidCredentials
+        }.to raise_error Universign::InvalidCredentials
       end
     end
 
@@ -40,10 +40,10 @@ describe Universign::Safeguard do
       it 'raises the known exception' do
         [
           # faultCode    # Exception
-          [73002, Universign::Client::ErrorWhenSigningPDF],
-          [73010, Universign::Client::InvalidCredentials],
-          [73025, Universign::Document::UnknownDocument],
-          [73027, Universign::Document::NotSigned]
+          [73002, Universign::ErrorWhenSigningPDF],
+          [73010, Universign::InvalidCredentials],
+          [73025, Universign::UnknownDocument],
+          [73027, Universign::DocumentNotSigned]
         ].each do |error|
           expect {
             dummy_class.safeguard do
@@ -58,10 +58,10 @@ describe Universign::Safeguard do
       it 'raises the known exception' do
         [
           # faultString                               # Exception
-          ['Error on document download for this URL', Universign::Document::DocumentURLInvalid],
-          ['Invalid document URL', Universign::Document::DocumentURLInvalid],
+          ['Error on document download for this URL', Universign::DocumentURLInvalid],
+          ['Invalid document URL', Universign::DocumentURLInvalid],
           ['Not enough tokens', Universign::NotEnoughTokens],
-          ['ID is unknown', Universign::Document::UnknownDocument]
+          ['ID is unknown', Universign::UnknownDocument]
         ].each do |error|
           expect {
             dummy_class.safeguard do

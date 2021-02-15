@@ -16,27 +16,27 @@ module Universign
           raise ex
         end
 
-        known_exception = Universign::ERROR_CODE[ex.faultCode]
+        known_exception = Universign::Error.match_class(ex.faultCode)
 
         if known_exception
           raise known_exception
         elsif ex.faultString.include?('Error on document download for this URL')
           url = ex.faultString.match(/<(.+)>/)[1] rescue 'unknown URL'
-          raise Universign::Document::DocumentURLInvalid.new(url)
+          raise Universign::DocumentURLInvalid.new(url)
         elsif ex.faultString.include?('Invalid document URL')
           url = ex.faultString.match(/<(.+)>/)[1] rescue 'unknown URL'
-          raise Universign::Document::DocumentURLInvalid.new(url)
+          raise Universign::DocumentURLInvalid.new(url)
         elsif ex.faultString.include?('Not enough tokens')
           raise Universign::NotEnoughTokens
         elsif ex.faultString.include?('ID is unknown')
-          raise Universign::Document::UnknownDocument
+          raise Universign::UnknownDocument
         else
           handle_exception(ex, callback)
         end
 
       rescue RuntimeError => ex
         if ex.message.include?('Authorization failed')
-          raise Universign::Client::InvalidCredentials
+          raise Universign::InvalidCredentials
         end
         raise ex
       end

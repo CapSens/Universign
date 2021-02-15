@@ -10,11 +10,10 @@ require 'universign/transaction'
 require 'universign/signature_field'
 require 'universign/signer_infos'
 require 'universign/transaction_signer'
+require 'universign/error'
 require 'universign/client'
 require 'universign/document'
 require 'universign/configuration'
-require 'universign/error'
 
 module Universign
-  include Error
 end
