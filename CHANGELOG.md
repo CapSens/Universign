@@ -1,3 +1,11 @@
+v1.5.1
+-------------------------
+- Fix bugs on multi-threads requests.
+
+v1.5.0
+-------------------------
+- Add `xmlrpc` as dependency, and raise required ruby version to 2.3.
+
 v1.4.0
 -------------------------
 - Refactor and rename errors. They now all inherit from `Universign::Error`.
