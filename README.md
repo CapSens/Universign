@@ -59,12 +59,12 @@ document_from_content = Universign::Document.new(
 )
 
 signer = Universign::TransactionSigner.new(
-  first_name:   "Signer's first name",
-  last_name:    "Signer's last name",
-  email:        'test@gmail.com',
-  phone_number: '0101010101',
-  success_url:  'https://google.com/',
-  signature:    Universign::SignatureField.new(coordinate: [20, 20], page: 1)
+  first_name:      "Signer's first name",
+  last_name:       "Signer's last name",
+  email:           'test@gmail.com',
+  phone_number:    '0101010101',
+  success_url:     'https://google.com/',
+  signature_field: Universign::SignatureField.new(coordinate: [20, 20], page: 1)
 )
 
 transaction = Universign::Transaction.create(

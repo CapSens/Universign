@@ -14,21 +14,20 @@ describe Universign::Transaction do
         Universign::Transaction.create(
           documents: [document],
           signers:   [signer],
-          options: options
+          options:   options
         )
       end
     end
 
-    let(:options) { { profile: 'default', final_doc_sent: true } }
+    let(:options) { {profile: 'default', final_doc_sent: true} }
 
     let(:signer) do
       Universign::TransactionSigner.new(
-        first_name:   "Signer's first name",
-        last_name:    "Signer's last name",
-        email: 'test@gmail.com',
-        # phone_number: "0132456789",
-        success_url:  "http://success-url.com/",
-        signature:    signature
+        first_name:      "Signer's first name",
+        last_name:       "Signer's last name",
+        email:           'test@gmail.com',
+        success_url:     "http://success-url.com/",
+        signature_field: signature
       )
     end
 
@@ -44,7 +43,7 @@ describe Universign::Transaction do
     context 'with a named signature and a chaining mode fields' do
       let(:cassette) { 'transaction/create_with_chaining_mode_field' }
       let(:options) do
-        { profile: 'default', final_doc_sent: true, chaining_mode: 'none' }
+        {profile: 'default', final_doc_sent: true, chaining_mode: 'none'}
       end
       let(:signature) do
         Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1)
