@@ -2,7 +2,6 @@ require 'singleton'
 
 module Universign
   class Client
-    include ::Singleton
     attr_reader :client
 
     def initialize

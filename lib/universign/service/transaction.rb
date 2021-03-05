@@ -26,7 +26,7 @@ module Universign
       #
       # @return [Universign::Transaction]
       def get
-        @client = Universign::Client.instance
+        @client = Universign::Client.new
 
         safeguard do
           result = @client.call('requester.getTransactionInfo', @transaction_id)
@@ -59,7 +59,7 @@ module Universign
         #
         # @return [Universign::Transaction]
         def create(documents:, signers:, options: {})
-          @client = Universign::Client.instance
+          @client = Universign::Client.new
 
           sign_options = DEFAULT_OPTIONS.merge(
             documents: documents.map(&:params),

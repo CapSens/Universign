@@ -82,4 +82,16 @@ describe Universign::Transaction do
       expect(transaction.signed?).to be false
     end
   end
+
+  it 'support parallel execution' do
+    VCR.use_cassette('transaction/thread') do
+      transaction = Universign::Transaction.new('0f7c32e2-b989-4017-87c5-d3e2a08eae52')
+
+      document_request = -> { transaction.documents.first.content.size }
+
+      threads = [Thread.new(&document_request), Thread.new(&document_request)]
+
+      expect{ threads.each(&:join) }.not_to raise_error
+    end
+  end
 end
