@@ -95,7 +95,7 @@ module Universign
     private
 
     def client
-      @client ||= Universign::Client.new.client
+      Universign::Client.new.client
     end
   end
 end

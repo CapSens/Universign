@@ -5,7 +5,7 @@ module Universign
       #
       # @return [Array<Universign::Document>]
       def documents
-        @client = Universign::Client.instance
+        @client = Universign::Client.new
 
         @documents ||= safeguard do
           result = @client.call('requester.getDocuments', @transaction_id)
