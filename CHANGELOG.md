@@ -1,3 +1,7 @@
+v1.5.2
+-------------------------
+- Added the possibility to add required checkboxes to `Universign::Document`.
+
 v1.5.1
 -------------------------
 - Fix bugs on multi-threads requests.
