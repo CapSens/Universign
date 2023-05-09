@@ -1,4 +1,4 @@
-v1.5.2
+v1.6.0
 -------------------------
 - Added the possibility to add required checkboxes to `Universign::Document`.
 
