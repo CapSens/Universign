@@ -85,32 +85,47 @@ transaction = Universign::Transaction.new('9696179e-a43d-4803-beeb-9e5c02fd159b'
 transaction.signed?
 ```
 
-The gem also supports the updated way of creating multiple signature fields per document:
+The gem also supports the updated way of creating multiple fields per document:
 
-```ruby
-doc_1 = Universign::Document.new(
-  name:    'one.pdf',
-  content: File.open('spec/fixtures/universign-guide-8.8.pdf').read,
-  signature_fields: [
-    Universign::SignatureField.new(coordinate: [20, 20], page: 1, signer_index: 0),
-    Universign::SignatureField.new(coordinate: [80, 20], page: 1, signer_index: 0)
-  ]
-)
+- Multiple signatures
+  ```ruby
+  doc_1 = Universign::Document.new(
+    name:    'one.pdf',
+    content: File.open('spec/fixtures/universign-guide-8.8.pdf').read,
+    signature_fields: [
+      Universign::SignatureField.new(coordinate: [20, 20], page: 1, signer_index: 0),
+      Universign::SignatureField.new(coordinate: [80, 20], page: 1, signer_index: 0)
+    ]
+  )
 
-doc_2 = Universign::Document.new(
-  name:    'two.pdf',
-  content: File.open('spec/fixtures/universign-guide-8.8.pdf').read,
-  signature_fields: [
-    Universign::SignatureField.new(coordinate: [100, 120], page: 4, signer_index: 0),
-  ]
-)
+  doc_2 = Universign::Document.new(
+    name:    'two.pdf',
+    content: File.open('spec/fixtures/universign-guide-8.8.pdf').read,
+    signature_fields: [
+      Universign::SignatureField.new(coordinate: [100, 120], page: 4, signer_index: 0),
+    ]
+  )
 
-transaction = Universign::Transaction.create(
-  documents: [doc_1, doc_2],
-  signers:   [signer],
-  options:   { profile: 'default', final_doc_sent: true }
-)
-```
+  transaction = Universign::Transaction.create(
+    documents: [doc_1, doc_2],
+    signers:   [signer],
+    options:   { profile: 'default', final_doc_sent: true }
+  )
+  ```
+
+- Multiple checkboxes
+  ```ruby
+  Universign::Document.new(
+    name:    "one.pdf",
+    content: File.open("spec/fixtures/universign-guide-8.8.pdf").read,
+    check_box_texts: [
+      "My first checkbox text",
+      "My second checkbox text",
+      ""
+    ]
+  )
+  ```
+  Note that the last checkbox must be an empty string as requested in the official documentation.
 
 ### `Universign::Document`
 

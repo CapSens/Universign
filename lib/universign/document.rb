@@ -88,6 +88,19 @@ module Universign
       end
     end
 
+    def check_box_texts
+      @check_box_texts ||= params["checkBoxTexts"]
+    end
+
+    def check_box_texts=(data)
+      if !data.is_a?(Array)
+        raise "CheckBoxTextsMustBeAnArray"
+      end
+
+      @check_box_texts = data
+      params["checkBoxTexts"] = data
+    end
+
     # The meta data of the PDF document
     #
     # @return [Hash]
