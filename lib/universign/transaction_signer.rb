@@ -1,6 +1,7 @@
 module Universign
   class TransactionSigner < Signer
-    attr_accessor :phone_number, :signature, :callbacks
+    attr_reader :phone_number
+    attr_accessor :signature, :callbacks
 
     def initialize(options = {})
       super(options)
