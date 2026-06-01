@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Universign::Transaction do
+  let(:client) { double('Universign::Client') }
+
+  before { allow(Universign::Client).to receive(:new).and_return(client) }
+
+  let(:sign_url) { 'https://sign.test.universign.eu/fr/signature/?id=signer-id' }
+
   let(:document) do
     Universign::Document.new(
       name:    'original_contract.pdf',
@@ -8,89 +14,102 @@ describe Universign::Transaction do
     )
   end
 
-  describe ".create" do
-    subject do
-      VCR.use_cassette(cassette) do
-        Universign::Transaction.create(
-          documents: [document],
-          signers:   [signer],
-          options:   options
-        )
-      end
-    end
+  let(:signer) do
+    Universign::TransactionSigner.new(
+      first_name:      "Signer's first name",
+      last_name:       "Signer's last name",
+      email:           'test@gmail.com',
+      success_url:     'http://success-url.com/',
+      signature_field: Universign::SignatureField.new(coordinate: [20, 20], page: 1)
+    )
+  end
 
-    let(:options) { {profile: 'default', final_doc_sent: true} }
-
-    let(:signer) do
-      Universign::TransactionSigner.new(
-        first_name:      "Signer's first name",
-        last_name:       "Signer's last name",
-        email:           'test@gmail.com',
-        success_url:     "http://success-url.com/",
-        signature_field: signature
+  describe '.create' do
+    subject(:transaction) do
+      Universign::Transaction.create(
+        documents: [document],
+        signers:   [signer],
+        options:   {profile: 'default', final_doc_sent: true}
       )
     end
 
-    context 'with a named signature field' do
-      let(:cassette) { 'transaction/create_with_named_field' }
-      let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1) }
-
-      it 'Gets a valid url' do
-        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
-      end
+    before do
+      allow(client).to receive(:call)
+        .with('requester.requestTransaction', anything)
+        .and_return('id' => 'tx-id', 'url' => sign_url)
     end
 
-    context 'with a named signature and a chaining mode fields' do
-      let(:cassette) { 'transaction/create_with_chaining_mode_field' }
-      let(:options) do
-        {profile: 'default', final_doc_sent: true, chaining_mode: 'none'}
-      end
-      let(:signature) do
-        Universign::SignatureField.new(coordinate: [20, 20], name: 'test', page: 1)
-      end
-
-      it 'Gets a valid url' do
-        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
-      end
+    it 'exposes the sign_url' do
+      expect(transaction.sign_url).to eq(sign_url)
     end
 
-    context 'with a coordinate signature field' do
-      let(:cassette) { 'transaction/create_with_coordinate_field' }
-      let(:signature) { Universign::SignatureField.new(coordinate: [20, 20], page: 1) }
+    it 'exposes the signer_id parsed from the sign_url' do
+      expect(transaction.signer_id).to eq('signer-id')
+    end
 
-      it 'Gets a valid url' do
-        expect(subject.url).to match(/https:\/\/.*universign\.eu/)
-      end
+    it 'does not make an extra getTransactionInfo call' do
+      expect(client).not_to receive(:call).with('requester.getTransactionInfo', anything)
+
+      transaction.sign_url
+      transaction.signer_id
     end
   end
 
-  describe "#signed?" do
-    it 'is signed with status == completed' do
-      transaction = VCR.use_cassette('transaction/signed/signed') do
-        Universign::Transaction.new('0ece5074-2273-491e-9315-9b1d1f0bbba8')
-      end
+  describe 'reloaded via .new' do
+    subject(:transaction) { Universign::Transaction.new('tx-id') }
+
+    before do
+      allow(client).to receive(:call)
+        .with('requester.getTransactionInfo', 'tx-id')
+        .and_return(
+          'signerInfos'   => [{'id' => 'signer-id', 'url' => sign_url, 'status' => 'ready'}],
+          'currentSigner' => 0,
+          'status'        => 'ready'
+        )
+    end
+
+    it 'fetches the sign_url from the signer infos' do
+      expect(transaction.sign_url).to eq(sign_url)
+    end
+
+    it 'exposes the signer_id' do
+      expect(transaction.signer_id).to eq('signer-id')
+    end
+  end
+
+  describe '#signed?' do
+    subject(:transaction) { Universign::Transaction.new('tx-id') }
+
+    it 'is signed when status is completed' do
+      allow(client).to receive(:call)
+        .with('requester.getTransactionInfo', 'tx-id')
+        .and_return('status' => 'completed')
 
       expect(transaction.signed?).to be true
     end
 
     it 'is not signed otherwise' do
-      transaction = VCR.use_cassette('transaction/signed/not_signed') do
-        Universign::Transaction.new('5512fd62-8bdc-45a1-9a37-661baeb0bdb0')
-      end
+      allow(client).to receive(:call)
+        .with('requester.getTransactionInfo', 'tx-id')
+        .and_return('status' => 'ready')
 
       expect(transaction.signed?).to be false
     end
   end
 
-  it 'support parallel execution' do
-    VCR.use_cassette('transaction/thread') do
-      transaction = Universign::Transaction.new('0f7c32e2-b989-4017-87c5-d3e2a08eae52')
+  describe '#documents' do
+    subject(:transaction) { Universign::Transaction.new('tx-id') }
 
-      document_request = -> { transaction.documents.first.content.size }
+    before do
+      allow(client).to receive(:call)
+        .with('requester.getDocuments', 'tx-id')
+        .and_return([{'content' => 'pdf-bytes', 'name' => 'doc.pdf'}])
+    end
 
-      threads = [Thread.new(&document_request), Thread.new(&document_request)]
+    it 'supports parallel access' do
+      threads = Array.new(2) { Thread.new { transaction.documents.first.content } }
 
-      expect{ threads.each(&:join) }.not_to raise_error
+      expect { threads.each(&:join) }.not_to raise_error
     end
   end
 end

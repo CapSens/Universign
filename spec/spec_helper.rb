@@ -1,27 +1,20 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'universign'
 
-require 'vcr'
-require 'dotenv'
-
-Dotenv.load
-
-load File.dirname(__FILE__) + '/support/vcr.rb'
-
-RSpec.configure do |config|
-  config.before(:suite) do
-    Universign.configure do |config|
-      config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
-      config.login    = ENV['UNIVERSIGN_LOGIN']
-      config.password = ENV['UNIVERSIGN_PASSWORD']
-    end
+# No network is hit by the suite: the XML-RPC client is stubbed in the specs
+# that exercise the API, so a static dummy configuration is enough.
+def configure_universign
+  Universign.configure do |config|
+    config.endpoint = 'https://example.test/rpc'
+    config.login    = 'login'
+    config.password = 'password'
   end
 end
 
 def restore_default_config
-  Universign.configure do |config|
-    config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
-    config.login    = ENV['UNIVERSIGN_LOGIN']
-    config.password = ENV['UNIVERSIGN_PASSWORD']
-  end
+  configure_universign
+end
+
+RSpec.configure do |config|
+  config.before(:suite) { configure_universign }
 end
