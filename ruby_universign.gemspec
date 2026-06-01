@@ -25,10 +25,10 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 3.0'
 
-  spec.add_runtime_dependency 'activesupport', '>= 4.1'
-  spec.add_runtime_dependency "xmlrpc"
+  spec.add_runtime_dependency 'activesupport', '>= 7.0'
+  spec.add_runtime_dependency "xmlrpc", ">= 0.3"
 
-  spec.add_development_dependency "bundler", ">= 1.10"
+  spec.add_development_dependency "bundler", ">= 2.0"
   spec.add_development_dependency "rake", ">= 12.3.3"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "simplecov", "~> 0.22"
