@@ -20,6 +20,13 @@ module Universign
   class DocumentNotSigned < Error; end
   class MissingDocument < Error; end
   class MetaDataMustBeAHash < Error; end
+
+  # An unknown key was passed in the transaction options.
+  class UnknownOption < Error; end
+  # A signature field was not a Universign::SignatureField.
+  class InvalidSignatureField < Error; end
+  class SignatureFieldsMustBeAnArray < Error; end
+  class CheckBoxTextsMustBeAnArray < Error; end
   class DocumentURLInvalid < Error
     attr_accessor :url
 

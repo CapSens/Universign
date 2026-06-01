@@ -73,14 +73,12 @@ describe Universign::Safeguard do
     end
 
     context 'the error is unknown' do
-      let(:block_called) { spy('invitation') }
-
-      it 'calls the yield block' do
-        dummy_class.safeguard(block_called) do
-          raise XMLRPC::FaultException.new(007, '')
-        end
-
-        expect(block_called).to have_received(:call)
+      it 're-raises the original fault exception' do
+        expect {
+          dummy_class.safeguard do
+            raise XMLRPC::FaultException.new(007, 'totally unknown fault')
+          end
+        }.to raise_error(XMLRPC::FaultException)
       end
     end
   end

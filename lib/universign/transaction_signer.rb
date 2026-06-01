@@ -56,8 +56,8 @@ module Universign
     #
     # @params [Universign::SignatureField] data
     def signature_field=(data)
-      if !data.instance_of?(Universign::SignatureField)
-        raise 'BadSignatureFieldType' # TODO: create custom Exception
+      unless data.instance_of?(Universign::SignatureField)
+        raise Universign::InvalidSignatureField
       end
 
       @signature_field        = data

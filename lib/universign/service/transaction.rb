@@ -13,14 +13,14 @@ module Universign
         final_doc_sent:             :finalDocSent,
         final_doc_requester_sent:   :finalDocRequesterSent,
         chaining_mode:              :chainingMode
-      }
+      }.freeze
 
       DEFAULT_OPTIONS = {
         handwrittenSignatureMode: 1,
         identificationType:       'sms',
         language:                 'fr',
         certificateType:          'simple'
-      }
+      }.freeze
 
       # Get a transaction from Universign
       #
@@ -68,12 +68,9 @@ module Universign
 
           options.each do |key, value|
             known_key = AVAILABLE_OPTIONS[key]
+            raise Universign::UnknownOption, key.to_s unless known_key
 
-            if known_key
-              sign_options[known_key] = value
-            else
-              raise "Unknown Key"
-            end
+            sign_options[known_key] = value
           end
 
           safeguard do

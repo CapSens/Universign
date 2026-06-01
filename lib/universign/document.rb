@@ -74,13 +74,13 @@ module Universign
     end
 
     def signature_fields=(data)
-      if !data.is_a?(Array)
-        raise 'SignatureFieldsMustBeAnArray'
-      end
+      raise Universign::SignatureFieldsMustBeAnArray unless data.is_a?(Array)
 
       @signature_fields = data
       params['signatureFields'] = data.map do |d|
-        raise 'BadSignatureFieldType' unless d.instance_of?(SignatureField)
+        unless d.instance_of?(SignatureField)
+          raise Universign::InvalidSignatureField
+        end
 
         d.params
       end
@@ -91,9 +91,7 @@ module Universign
     end
 
     def check_box_texts=(data)
-      if !data.is_a?(Array)
-        raise "CheckBoxTextsMustBeAnArray"
-      end
+      raise Universign::CheckBoxTextsMustBeAnArray unless data.is_a?(Array)
 
       @check_box_texts = data
       params["checkBoxTexts"] = data
