@@ -1,3 +1,16 @@
+v2.0.0
+-------------------------
+- **BREAKING**: remove `Transaction#url` (its return type was inconsistent — a
+  String after `.create`, an Array after `getTransactionInfo`). Use the new
+  `Transaction#sign_url` (always a String) and `Transaction#signer_id` instead.
+- `Transaction` no longer fetches the transaction info eagerly in the
+  constructor: `getTransactionInfo` is now performed lazily on first access to
+  `data` (or any attribute relying on it). `.create` therefore no longer makes
+  a redundant second API call, and `sign_url`/`signer_id` are available without
+  any extra request.
+- Test suite no longer depends on VCR/WebMock/dotenv: the XML-RPC client is
+  stubbed directly.
+
 v1.6.0
 -------------------------
 - Added the possibility to add required checkboxes to `Universign::Document`.

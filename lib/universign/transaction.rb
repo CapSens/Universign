@@ -1,17 +1,25 @@
+require "uri"
+
 module Universign
   class Transaction
     include Universign::Safeguard
     include Service::Transaction
     include Service::Document
 
-    attr_reader :transaction_id, :url, :data
+    attr_reader :transaction_id
 
-    def initialize(transaction_id = nil, url = nil)
+    def initialize(transaction_id = nil, sign_url = nil)
       @transaction_id = transaction_id
-      @url            = url
-      @data           = {}
+      @sign_url       = sign_url
+    end
 
-      self.get
+    # The transaction info, lazily fetched from Universign on first access.
+    # Transactions built via .create expose their sign_url/signer_id without
+    # triggering this call.
+    #
+    # @return [Hash]
+    def data
+      @data ||= get
     end
 
     def from_data(data)
@@ -22,20 +30,33 @@ module Universign
     #
     # The status of the transaction. The existing statuses are:
     #
-    # | Status      | Description                                                                                      |
-    # |-------------|--------------------------------------------------------------------------------------------------|
-    # | `ready`     | Signers can connect and sign                                                                     |
-    # | `expired`   | The transaction has been requested more than 7 days ago. It will no more be available to signers |
-    # | `canceled`  | A signer has canceled the transaction. Signers will no more be able to connect to the service    |
-    # | `failed`    | An error occured during a signature. The signers won’t be able to connect to the service         |
-    # | `completed` | All signers have successfuly sign, the requester can retrieve the documents                      |
+    # | Status      | Description                                                |
+    # |-------------|------------------------------------------------------------|
+    # | `ready`     | Signers can connect and sign                               |
+    # | `expired`   | Requested more than 7 days ago, no longer available        |
+    # | `canceled`  | A signer has canceled the transaction                      |
+    # | `failed`    | An error occured during a signature                        |
+    # | `completed` | All signers have successfuly signed                        |
     def status
       data['status']
     end
 
-    # @return [Array<String>]
-    def url
-      @url ||= data['signerInfos'].map { |si| si['url'] }
+    # The URL the signer must open to sign (embeddable iframe URL). Always a
+    # String. Available without an API call right after .create.
+    #
+    # @return [String, nil]
+    def sign_url
+      @sign_url ||= data.dig('signerInfos', current_signer || 0, 'url')
+    end
+
+    # The signer id, parsed from the sign URL query param (?id=...).
+    #
+    # @return [String, nil]
+    def signer_id
+      query = URI(sign_url.to_s).query
+      return if query.nil?
+
+      URI.decode_www_form(query).to_h['id']
     end
 
     # A list of bean containing information about the signers
