@@ -25,10 +25,8 @@ module Universign
     # @param [Hash] data
     # @return [Universign::Document]
     def self.from_data(data)
-      @params = data
-
-      document = Universign::Document.new
-      document.params.merge!(@params)
+      document = new
+      document.params.merge!(data)
       document
     end
 

@@ -59,12 +59,14 @@ module Universign
       URI.decode_www_form(query).to_h['id']
     end
 
-    # A list of bean containing information about the signers
+    # A list of beans containing information about the signers
     # and their progression in the signature process
     #
-    # @return [Array<Universign::Signer]
+    # @return [Array<Universign::SignerInfos>]
     def signers
-      raise 'NotImplementedYet'
+      Array(data['signerInfos']).map do |signer_info|
+        Universign::SignerInfos.from_data(signer_info)
+      end
     end
 
     # A bean containing information about the requester of a

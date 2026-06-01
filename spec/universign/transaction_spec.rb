@@ -117,6 +117,39 @@ describe Universign::Transaction do
     end
   end
 
+  describe '#signers' do
+    subject(:transaction) { Universign::Transaction.new('tx-id') }
+
+    before do
+      allow(client).to receive(:call)
+        .with('requester.getTransactionInfo', 'tx-id')
+        .and_return(
+          'signerInfos' => [
+            {'status' => 'signed', 'url' => sign_url, 'email' => 'a@test.com'},
+            {'status' => 'ready', 'url' => sign_url, 'email' => 'b@test.com'}
+          ]
+        )
+    end
+
+    it 'maps signerInfos to SignerInfos beans' do
+      expect(transaction.signers).to all(be_a(Universign::SignerInfos))
+      expect(transaction.signers.map(&:status)).to eq(['signed', 'ready'])
+      expect(transaction.signers.map(&:email)).to eq(['a@test.com', 'b@test.com'])
+    end
+
+    context 'without signerInfos in the data' do
+      before do
+        allow(client).to receive(:call)
+          .with('requester.getTransactionInfo', 'tx-id')
+          .and_return('status' => 'ready')
+      end
+
+      it 'returns an empty array' do
+        expect(transaction.signers).to eq([])
+      end
+    end
+  end
+
   describe '#documents' do
     subject(:transaction) { Universign::Transaction.new('tx-id') }
 

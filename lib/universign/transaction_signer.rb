@@ -68,7 +68,7 @@ module Universign
     # signature
     #
     # @params [Date] data
-    def birtdate=(data)
+    def birthdate=(data)
       @birthdate         = data
       params[:birthDate] = data
     end
