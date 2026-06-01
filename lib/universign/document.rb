@@ -2,7 +2,6 @@ module Universign
   class Document
     include Universign::Safeguard
 
-    attr_reader :name, :file_content, :file_url
     attr_accessor :params
 
     # Create a new Universign::Document
@@ -46,11 +45,10 @@ module Universign
     #
     # @return [String]
     def url
-      @url ||= params['url']
+      params['url']
     end
 
     def url=(data)
-      @url          = data
       params['url'] = data
     end
 
@@ -58,18 +56,17 @@ module Universign
     #
     # @return [String]
     def document_type
-      @document_type ||= params['documentType']
+      params['documentType']
     end
 
     # The file name of this document
     #
     # @return [String]
     def name
-      @name ||= params['name']
+      params['name']
     end
 
     def name=(data)
-      @name          = data
       params['name'] = data
     end
 
@@ -87,17 +84,18 @@ module Universign
     end
 
     def check_box_texts
-      @check_box_texts ||= params["checkBoxTexts"]
+      params['checkBoxTexts']
     end
 
     def check_box_texts=(data)
       raise Universign::CheckBoxTextsMustBeAnArray unless data.is_a?(Array)
 
-      @check_box_texts = data
-      params["checkBoxTexts"] = data
+      params['checkBoxTexts'] = data
     end
 
-    # The meta data of the PDF document
+    # The meta data of the PDF document. Kept verbatim (the ivar) rather
+    # than read back from params, which would otherwise stringify the
+    # caller's symbol keys through HashWithIndifferentAccess.
     #
     # @return [Hash]
     def meta_data
@@ -105,9 +103,7 @@ module Universign
     end
 
     def meta_data=(data)
-      if !data.is_a?(Hash)
-        raise MetaDataMustBeAHash
-      end
+      raise Universign::MetaDataMustBeAHash unless data.is_a?(Hash)
 
       @meta_data         = data
       params['metaData'] = data

@@ -5,10 +5,8 @@ module Universign
       #
       # @return [Array<Universign::Document>]
       def documents
-        @client = Universign::Client.new
-
         @documents ||= safeguard do
-          result = @client.call('requester.getDocuments', @transaction_id)
+          result = Universign::Client.call('requester.getDocuments', @transaction_id)
           result.map do |document|
             Universign::Document.from_data(document)
           end

@@ -112,13 +112,5 @@ module Universign
     def signed?
       status == 'completed'
     end
-
-    ########################
-
-    private
-
-    def client
-      Universign::Client.new.client
-    end
   end
 end
