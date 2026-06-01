@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Universign
   class Document
     include Universign::Safeguard

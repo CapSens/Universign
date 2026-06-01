@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Universign
   class TransactionSigner < Signer
     attr_accessor :phone_number, :signature, :callbacks

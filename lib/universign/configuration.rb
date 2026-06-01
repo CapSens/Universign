@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Universign
   class Configuration
     attr_accessor :login, :password, :endpoint, :proxy, :timeout

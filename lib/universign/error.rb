@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Universign
   class Error < ::StandardError
     def self.match_class(code)

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Universign
   class SignerInfos < Signer
     # The status of the signer

@@ -18,7 +18,7 @@ v2.0.0
 - Simplify `Safeguard`: drop the unused callback mechanism, name the `73020`
   fault code, and match by fault code before falling back to fault strings.
 - Internal cleanup: `params` is now the single source of truth for documents
-  and signers, `.travis.yml` removed, `frozen_string_literal` enabled.
+  and signers, `.travis.yml` removed.
 - `Transaction` no longer fetches the transaction info eagerly in the
   constructor: `getTransactionInfo` is now performed lazily on first access to
   `data` (or any attribute relying on it). `.create` therefore no longer makes

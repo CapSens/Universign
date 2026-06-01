@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Universign
   class SignatureField
     attr_reader :params
