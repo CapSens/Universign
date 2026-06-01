@@ -43,4 +43,16 @@ describe Universign::Configuration do
       expect(Universign.configuration.password).to eql(password)
     end
   end
+
+  describe '.configuration=' do
+    it 'replaces the whole configuration object' do
+      custom = Universign::Configuration.new
+      custom.endpoint = 'https://custom.test/'
+
+      Universign.configuration = custom
+
+      expect(Universign.configuration).to be(custom)
+      expect(Universign.configuration.endpoint).to eq('https://custom.test/')
+    end
+  end
 end

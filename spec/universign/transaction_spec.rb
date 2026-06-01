@@ -54,6 +54,20 @@ describe Universign::Transaction do
       transaction.signer_id
     end
 
+    context 'with an unknown option' do
+      it 'raises UnknownOption before calling the API' do
+        expect(client).not_to receive(:call)
+
+        expect {
+          Universign::Transaction.create(
+            documents: [document],
+            signers:   [signer],
+            options:   {not_a_real_option: true}
+          )
+        }.to raise_error(Universign::UnknownOption, /not_a_real_option/)
+      end
+    end
+
     context 'with a document referenced by URL' do
       let(:document) do
         Universign::Document.new(name: 'contract.pdf', url: 'https://files.example/contract.pdf')
@@ -114,6 +128,38 @@ describe Universign::Transaction do
         .and_return('status' => 'ready')
 
       expect(transaction.signed?).to be false
+    end
+  end
+
+  describe 'lazy data accessors' do
+    subject(:transaction) { Universign::Transaction.new('tx-id') }
+
+    before do
+      allow(client).to receive(:call)
+        .with('requester.getTransactionInfo', 'tx-id')
+        .and_return(
+          'description'   => 'My contract',
+          'eachField'     => true,
+          'initiatorInfo' => {'email' => 'requester@example.com'},
+          'creationDate'  => Date.new(2026, 6, 1),
+          'currentSigner' => 0,
+          'signerInfos'   => [{'url' => 'https://sign.test/without-query'}]
+        )
+    end
+
+    it 'exposes the description and eachField' do
+      expect(transaction.description).to eq('My contract')
+      expect(transaction.each_field).to be(true)
+    end
+
+    it 'exposes the initiator and creation date' do
+      expect(transaction.initiator).to eq('email' => 'requester@example.com')
+      expect(transaction.created_at).to eq(Date.new(2026, 6, 1))
+      expect(transaction.current_signer).to eq(0)
+    end
+
+    it 'returns a nil signer_id when the sign_url has no query' do
+      expect(transaction.signer_id).to be_nil
     end
   end
 

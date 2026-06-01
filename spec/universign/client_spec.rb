@@ -15,6 +15,14 @@ describe Universign::Client do
     it 'is false for unknown methods' do
       expect(client).not_to respond_to(:definitely_not_a_method)
     end
+
+    it 'raises NoMethodError when calling an unknown method' do
+      expect { client.definitely_not_a_method }.to raise_error(NoMethodError)
+    end
+
+    it 'delegates known methods to the underlying XML-RPC client' do
+      expect(client.user).to eq('login')
+    end
   end
 
   describe '.call' do

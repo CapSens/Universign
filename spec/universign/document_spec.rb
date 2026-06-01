@@ -34,6 +34,49 @@ describe Universign::Document do
     end
   end
 
+  describe '#signature_fields=' do
+    it 'maps SignatureField instances to their params' do
+      field    = Universign::SignatureField.new(coordinate: [10, 20], page: 1)
+      document = described_class.new(name: 'doc.pdf', signature_fields: [field])
+
+      expect(document.params['signatureFields']).to eq([field.params.stringify_keys])
+    end
+
+    it 'raises when not given an array' do
+      expect {
+        described_class.new(signature_fields: 'nope')
+      }.to raise_error(Universign::SignatureFieldsMustBeAnArray)
+    end
+
+    it 'raises when an element is not a SignatureField' do
+      expect {
+        described_class.new(signature_fields: ['nope'])
+      }.to raise_error(Universign::InvalidSignatureField)
+    end
+  end
+
+  describe '#check_box_texts=' do
+    it 'stores the texts' do
+      document = described_class.new(check_box_texts: ['a', 'b', ''])
+
+      expect(document.check_box_texts).to eq(['a', 'b', ''])
+    end
+
+    it 'raises when not given an array' do
+      expect {
+        described_class.new(check_box_texts: 'nope')
+      }.to raise_error(Universign::CheckBoxTextsMustBeAnArray)
+    end
+  end
+
+  describe '#document_type' do
+    it 'reads the documentType from params' do
+      document = described_class.from_data('documentType' => 'application/pdf')
+
+      expect(document.document_type).to eq('application/pdf')
+    end
+  end
+
   describe '.from_data' do
     let(:data) { {
       documentType: 'application/pdf',
