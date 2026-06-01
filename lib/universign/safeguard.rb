@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Universign
   module Safeguard
     # Universign raises this fault code while a signature is still in

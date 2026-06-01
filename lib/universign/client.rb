@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Universign
   class Client
     attr_reader :client

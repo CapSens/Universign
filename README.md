@@ -73,8 +73,11 @@ transaction = Universign::Transaction.create(
   options:   { profile: 'default', final_doc_sent: true }
 )
 
-transaction.url
+transaction.sign_url
 # => "https://sign.test.universign.eu/fr/signature/?id=f052e35e-a792-4440-bb67-6b5c3f17aa30"
+
+transaction.signer_id
+# => "f052e35e-a792-4440-bb67-6b5c3f17aa30"
 
 transaction.transaction_id
 # => "9696179e-a43d-4803-beeb-9e5c02fd159b"
@@ -178,8 +181,10 @@ Default options are:
 For more informations on theses options, see Universign's official documentation
 
 Once your transaction is created:
-* `url` is where you must redirect your users for them to sign
+* `sign_url` is where you must redirect your users for them to sign (always a String, available without any extra API call right after `.create`)
+* `signer_id` is the signer id parsed from the sign URL
 * `transaction_id` is the id you must save to retrieve it later. You can request up-to-date informations from Universign with `Universign::Transaction.new(transaction_id)`.
+* `signers` returns the signers progression as `Universign::SignerInfos` beans
 * `signed?` returns a boolean that tells you if the transaction is signed, or not !
 
 ## Universign documentation

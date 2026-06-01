@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Universign
   class Signer
     attr_accessor :params
