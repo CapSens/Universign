@@ -10,6 +10,8 @@ v2.0.0
   any extra request.
 - Test suite no longer depends on VCR/WebMock/dotenv: the XML-RPC client is
   stubbed directly.
+- Document the ability to send a document by URL (`Universign::Document.new(url:)`)
+  so Universign downloads it itself, instead of uploading base64 content.
 
 v1.6.0
 -------------------------

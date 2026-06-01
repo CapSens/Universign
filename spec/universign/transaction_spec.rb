@@ -53,6 +53,26 @@ describe Universign::Transaction do
       transaction.sign_url
       transaction.signer_id
     end
+
+    context 'with a document referenced by URL' do
+      let(:document) do
+        Universign::Document.new(name: 'contract.pdf', url: 'https://files.example/contract.pdf')
+      end
+
+      it 'sends the document URL instead of base64 content' do
+        expect(client).to receive(:call) do |method, options|
+          expect(method).to eq('requester.requestTransaction')
+
+          sent_document = options[:documents].first
+          expect(sent_document['url']).to eq('https://files.example/contract.pdf')
+          expect(sent_document).not_to have_key('content')
+
+          {'id' => 'tx-id', 'url' => sign_url}
+        end
+
+        expect(transaction.sign_url).to eq(sign_url)
+      end
+    end
   end
 
   describe 'reloaded via .new' do
