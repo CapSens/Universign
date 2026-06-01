@@ -21,7 +21,7 @@ module Universign
 
         raise translate_fault(ex)
       rescue RuntimeError => ex
-        raise Universign::InvalidCredentials if ex.message.include?('Authorization failed')
+        raise Universign::InvalidCredentials if ex.message.include?("Authorization failed")
 
         raise ex
       end
@@ -38,7 +38,7 @@ module Universign
 
         case ex.faultString
         when /Error on document download for this URL/, /Invalid document URL/
-          url = ex.faultString[/<(.+)>/, 1] || 'unknown URL'
+          url = ex.faultString[/<(.+)>/, 1] || "unknown URL"
           Universign::DocumentURLInvalid.new(url)
         when /Not enough tokens/
           Universign::NotEnoughTokens

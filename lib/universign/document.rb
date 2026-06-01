@@ -33,48 +33,48 @@ module Universign
     #
     # @return [Array<Byte>]
     def content
-      @content ||= params['content']
+      @content ||= params["content"]
     end
 
     def content=(data)
       @content         = data
-      params[:content] =  XMLRPC::Base64.new(data)
+      params[:content] = XMLRPC::Base64.new(data)
     end
 
     # The URL to download the PDF document
     #
     # @return [String]
     def url
-      params['url']
+      params["url"]
     end
 
     def url=(data)
-      params['url'] = data
+      params["url"] = data
     end
 
     # The type of this document
     #
     # @return [String]
     def document_type
-      params['documentType']
+      params["documentType"]
     end
 
     # The file name of this document
     #
     # @return [String]
     def name
-      params['name']
+      params["name"]
     end
 
     def name=(data)
-      params['name'] = data
+      params["name"] = data
     end
 
     def signature_fields=(data)
       raise Universign::SignatureFieldsMustBeAnArray unless data.is_a?(Array)
 
       @signature_fields = data
-      params['signatureFields'] = data.map do |d|
+      params["signatureFields"] = data.map do |d|
         unless d.instance_of?(SignatureField)
           raise Universign::InvalidSignatureField
         end
@@ -84,13 +84,13 @@ module Universign
     end
 
     def check_box_texts
-      params['checkBoxTexts']
+      params["checkBoxTexts"]
     end
 
     def check_box_texts=(data)
       raise Universign::CheckBoxTextsMustBeAnArray unless data.is_a?(Array)
 
-      params['checkBoxTexts'] = data
+      params["checkBoxTexts"] = data
     end
 
     # The meta data of the PDF document. Kept verbatim (the ivar) rather
@@ -99,14 +99,14 @@ module Universign
     #
     # @return [Hash]
     def meta_data
-      @meta_data ||= params['metaData']
+      @meta_data ||= params["metaData"]
     end
 
     def meta_data=(data)
       raise Universign::MetaDataMustBeAHash unless data.is_a?(Hash)
 
       @meta_data         = data
-      params['metaData'] = data
+      params["metaData"] = data
     end
   end
 end

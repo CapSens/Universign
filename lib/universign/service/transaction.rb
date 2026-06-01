@@ -2,24 +2,24 @@ module Universign
   module Service
     module Transaction
       AVAILABLE_OPTIONS = {
-        custom_id:                  :customId,
-        description:                :description,
+        custom_id: :customId,
+        description: :description,
         handwritten_signature_mode: :handwrittenSignatureMode,
-        certificate_type:           :certificateType,
-        language:                   :language,
-        identification_type:        :identificationType,
-        handwritten_signature:      :handwrittenSignature,
-        profile:                    :profile,
-        final_doc_sent:             :finalDocSent,
-        final_doc_requester_sent:   :finalDocRequesterSent,
-        chaining_mode:              :chainingMode
+        certificate_type: :certificateType,
+        language: :language,
+        identification_type: :identificationType,
+        handwritten_signature: :handwrittenSignature,
+        profile: :profile,
+        final_doc_sent: :finalDocSent,
+        final_doc_requester_sent: :finalDocRequesterSent,
+        chaining_mode: :chainingMode,
       }.freeze
 
       DEFAULT_OPTIONS = {
         handwrittenSignatureMode: 1,
-        identificationType:       'sms',
-        language:                 'fr',
-        certificateType:          'simple'
+        identificationType: "sms",
+        language: "fr",
+        certificateType: "simple",
       }.freeze
 
       # Get a transaction from Universign
@@ -27,8 +27,8 @@ module Universign
       # @return [Universign::Transaction]
       def get
         safeguard do
-          result = Universign::Client.call('requester.getTransactionInfo', @transaction_id)
-          self.from_data(result)
+          result = Universign::Client.call("requester.getTransactionInfo", @transaction_id)
+          from_data(result)
         end
       end
 
@@ -59,7 +59,7 @@ module Universign
         def create(documents:, signers:, options: {})
           sign_options = DEFAULT_OPTIONS.merge(
             documents: documents.map(&:params),
-            signers:   signers.map(&:params),
+            signers: signers.map(&:params)
           )
 
           options.each do |key, value|
@@ -71,7 +71,7 @@ module Universign
 
           safeguard do
             result = Universign::Client.call("requester.requestTransaction", sign_options)
-            Universign::Transaction.new(result['id'], result['url'])
+            Universign::Transaction.new(result["id"], result["url"])
           end
         end
       end

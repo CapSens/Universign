@@ -38,7 +38,7 @@ module Universign
     # | `failed`    | An error occured during a signature                        |
     # | `completed` | All signers have successfuly signed                        |
     def status
-      data['status']
+      data["status"]
     end
 
     # The URL the signer must open to sign (embeddable iframe URL). Always a
@@ -46,7 +46,7 @@ module Universign
     #
     # @return [String, nil]
     def sign_url
-      @sign_url ||= data.dig('signerInfos', current_signer || 0, 'url')
+      @sign_url ||= data.dig("signerInfos", current_signer || 0, "url")
     end
 
     # The signer id, parsed from the sign URL query param (?id=...).
@@ -56,7 +56,7 @@ module Universign
       query = URI(sign_url.to_s).query
       return if query.nil?
 
-      URI.decode_www_form(query).to_h['id']
+      URI.decode_www_form(query).to_h["id"]
     end
 
     # A list of beans containing information about the signers
@@ -64,7 +64,7 @@ module Universign
     #
     # @return [Array<Universign::SignerInfos>]
     def signers
-      Array(data['signerInfos']).map do |signer_info|
+      Array(data["signerInfos"]).map do |signer_info|
         Universign::SignerInfos.from_data(signer_info)
       end
     end
@@ -73,7 +73,7 @@ module Universign
     # transaction
     # @return
     def initiator
-      data['initiatorInfo']
+      data["initiatorInfo"]
     end
 
     # The index of current signer if the status of transaction
@@ -81,21 +81,21 @@ module Universign
     #
     # @return [Integer]
     def current_signer
-      data['currentSigner']
+      data["currentSigner"]
     end
 
     # The creation date or last relaunch date of this transaction
     #
     # @return [Date]
     def created_at
-      data['creationDate'].to_date
+      data["creationDate"].to_date
     end
 
     # The description of the Transaction
     #
     # @return [String]
     def description
-      data['description']
+      data["description"]
     end
 
     # Whether the transaction was requested with requesting handwritten signature
@@ -103,14 +103,14 @@ module Universign
     #
     # @return [Boolean]
     def each_field
-      data['eachField']
+      data["eachField"]
     end
 
     # Whether the transaction is signed... or not !
     #
     # @return [Boolean]
     def signed?
-      status == 'completed'
+      status == "completed"
     end
   end
 end

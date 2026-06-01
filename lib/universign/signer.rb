@@ -20,7 +20,7 @@ module Universign
     #
     # @return [String]
     def first_name
-      params[:firstname] || params['firstName']
+      params[:firstname] || params["firstName"]
     end
 
     def first_name=(data)
@@ -31,7 +31,7 @@ module Universign
     #
     # @return [String]
     def last_name
-      params[:lastname] || params['lastName']
+      params[:lastname] || params["lastName"]
     end
 
     def last_name=(data)

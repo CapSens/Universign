@@ -5,12 +5,12 @@ module Universign
     # Convenience: build a fresh client and forward a call to it. A new
     # client (and connection) is used per call, which keeps the wrapper
     # thread-safe — XMLRPC::Client is not safe to share across threads.
-    def self.call(*args, &block)
-      new.call(*args, &block)
+    def self.call(...)
+      new.call(...)
     end
 
     def initialize
-      @client          = XMLRPC::Client.new2(
+      @client = XMLRPC::Client.new2(
         Universign.configuration.endpoint,
         Universign.configuration.proxy,
         Universign.configuration.timeout
@@ -19,9 +19,9 @@ module Universign
       @client.password = Universign.configuration.password
     end
 
-    def method_missing(method, *args, &block)
+    def method_missing(method, ...)
       if @client.respond_to?(method)
-        @client.send(method, *args, &block)
+        @client.send(method, ...)
       else
         super
       end

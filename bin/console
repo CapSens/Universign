@@ -9,14 +9,14 @@ require "universign"
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
-require 'dotenv'
+require "dotenv"
 
 Dotenv.load
 
 Universign.configure do |config|
-  config.endpoint = ENV['UNIVERSIGN_ENDPOINT']
-  config.login    = ENV['UNIVERSIGN_LOGIN']
-  config.password = ENV['UNIVERSIGN_PASSWORD']
+  config.endpoint = ENV["UNIVERSIGN_ENDPOINT"]
+  config.login    = ENV["UNIVERSIGN_LOGIN"]
+  config.password = ENV["UNIVERSIGN_PASSWORD"]
 end
 
 require "irb"

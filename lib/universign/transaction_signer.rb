@@ -94,12 +94,12 @@ module Universign
 
     # Which authentication type will be used when a signer will attempt to sign.
     #
-    # The available values are :
-    # |   Type  |                                                                                    Description                                                                                   |
-    # |:-------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-    # |  `none` |                                                           The signer won’t be asked an authentication code when signing                                                          |
-    # | `email` |       The signer will be sent a authentication code by e-mail. Using this option implies that this signer has a valid email property set, otherwise, an exception is thrown      |
-    # |  `sms`  | The signer will be sent a authentication code by sms. Using this option implies that this signer has a valid `phone_number` property set, in other cases, an exception is thrown |
+    # The available values are:
+    # - `none`: the signer won't be asked an authentication code when signing
+    # - `email`: an authentication code is sent by e-mail (requires a valid
+    #   `email`, otherwise an exception is thrown)
+    # - `sms`: an authentication code is sent by SMS (requires a valid
+    #   `phone_number`, otherwise an exception is thrown)
     def identification_type=(data)
       @identification_type        = data
       params[:identificationType] = data

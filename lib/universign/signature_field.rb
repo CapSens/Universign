@@ -6,9 +6,9 @@ module Universign
       coordinate ||= [0, 0]
 
       @params = {
-        page:        page,
-        x:           coordinate[0],
-        y:           coordinate[1],
+        page: page,
+        x: coordinate[0],
+        y: coordinate[1],
         signerIndex: signer_index,
       }
       @params[:name] = name unless name.nil?
