@@ -49,14 +49,16 @@ module Universign
       @sign_url ||= data.dig("signerInfos", current_signer || 0, "url")
     end
 
-    # The signer id, parsed from the sign URL query param (?id=...).
+    # The signer id, parsed from the sign URL. Universign exposes the id in the
+    # query string on legacy URLs (".../signature/?id=...") and in the fragment
+    # on app.universign.com URLs (".../sig/#/?id=..."), so we read from both.
     #
     # @return [String, nil]
     def signer_id
-      query = URI(sign_url.to_s).query
-      return if query.nil?
+      params = URI(sign_url.to_s).then { |uri| uri.query || uri.fragment }
+      return if params.nil?
 
-      URI.decode_www_form(query).to_h["id"]
+      URI.decode_www_form(params.sub(%r{\A/?\??}, "")).to_h["id"]
     end
 
     # A list of beans containing information about the signers

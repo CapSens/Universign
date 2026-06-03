@@ -47,6 +47,14 @@ describe Universign::Transaction do
       expect(transaction.signer_id).to eq("signer-id")
     end
 
+    context "when Universign returns the id in the URL fragment" do
+      let(:sign_url) { "https://app.universign.com/sig/#/?id=signer-id" }
+
+      it "parses the signer_id from the fragment" do
+        expect(transaction.signer_id).to eq("signer-id")
+      end
+    end
+
     it "does not make an extra getTransactionInfo call" do
       expect(client).not_to receive(:call).with("requester.getTransactionInfo", anything)
 
