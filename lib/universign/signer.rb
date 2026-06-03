@@ -11,18 +11,19 @@ module Universign
     end
 
     def self.from_data(data)
-      @params = data
+      signer = new
+      signer.params.merge!(data)
+      signer
     end
 
     # This signer’s firstname
     #
     # @return [String]
     def first_name
-      @first_name || params['firstName']
+      params[:firstname] || params["firstName"]
     end
 
     def first_name=(data)
-      @first_name        = data
       params[:firstname] = data
     end
 
@@ -30,12 +31,18 @@ module Universign
     #
     # @return [String]
     def last_name
-      @last_name || params['lastName']
+      params[:lastname] || params["lastName"]
     end
 
     def last_name=(data)
-      @last_name        = data
       params[:lastname] = data
+    end
+
+    # The raw data backing this signer when built from an API response.
+    #
+    # @return [Hash]
+    def data
+      params
     end
   end
 end

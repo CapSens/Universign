@@ -1,7 +1,6 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'universign/version'
+require "universign/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "ruby_universign"
@@ -23,15 +22,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = '>= 2.3'
+  spec.required_ruby_version = ">= 3.0"
 
-  spec.add_runtime_dependency 'activesupport', '>= 4.1'
-  spec.add_runtime_dependency "xmlrpc"
+  spec.add_runtime_dependency "activesupport", ">= 7.0"
+  spec.add_runtime_dependency "xmlrpc", ">= 0.3"
 
-  spec.add_development_dependency "bundler", ">= 1.10"
+  spec.add_development_dependency "bundler", ">= 2.0"
   spec.add_development_dependency "rake", ">= 12.3.3"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "dotenv", "~> 2.0"
-  spec.add_development_dependency "webmock", "~> 3.0"
-  spec.add_development_dependency "vcr", "~> 4.0"
+  spec.add_development_dependency "simplecov", "~> 0.22"
 end

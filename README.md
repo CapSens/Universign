@@ -1,12 +1,17 @@
 # RubyUniversign
 
-RubyUniversign is a Ruby gem for interacting with [Universign](https://www.universign.com/) electronic signature API.
+RubyUniversign is a Ruby gem for interacting with the [Universign](https://www.universign.com/) electronic signature API.
 
-It ease requests to Universign API, documents uploads and following signature state.
+It eases requests to the Universign API: uploading documents, requesting signatures and following their state.
 
-This gem is **not** officialy made by Universign, but was originally created by [CapSens](https://capsens.eu/) for internal usage.
+This gem is **not** officially made by Universign, but was originally created by [CapSens](https://capsens.eu/) for internal usage.
 
-This gem currently integrate electronic signature service, but not other Universign services (timestamping and server stamp).
+It currently integrates the electronic signature service only, not the other Universign services (timestamping and server stamp).
+
+## Requirements
+
+- Ruby `>= 3.0`
+- An Universign account (login / password / endpoint)
 
 ## Installation
 
@@ -73,8 +78,11 @@ transaction = Universign::Transaction.create(
   options:   { profile: 'default', final_doc_sent: true }
 )
 
-transaction.url
+transaction.sign_url
 # => "https://sign.test.universign.eu/fr/signature/?id=f052e35e-a792-4440-bb67-6b5c3f17aa30"
+
+transaction.signer_id
+# => "f052e35e-a792-4440-bb67-6b5c3f17aa30"
 
 transaction.transaction_id
 # => "9696179e-a43d-4803-beeb-9e5c02fd159b"
@@ -83,6 +91,22 @@ transaction.transaction_id
 transaction = Universign::Transaction.new('9696179e-a43d-4803-beeb-9e5c02fd159b')
 # was the transaction signed by the user ?
 transaction.signed?
+```
+
+When you rebuild a transaction from its id with `Universign::Transaction.new(id)`,
+the transaction info is fetched **lazily**: no API call is made until you read an
+attribute that needs it (`status`, `signed?`, `signers`, `documents`, …). Reading
+several attributes only triggers a single `getTransactionInfo` call, which is then
+memoized.
+
+```ruby
+transaction = Universign::Transaction.new('9696179e-...')
+
+transaction.status        # => "completed"
+transaction.signed?       # => true
+transaction.signers       # => [#<Universign::SignerInfos>, ...]
+transaction.signers.first.status # => "signed"
+transaction.documents     # => [#<Universign::Document>, ...] (signed PDFs)
 ```
 
 The gem also supports the updated way of creating multiple fields per document:
@@ -178,17 +202,64 @@ Default options are:
 For more informations on theses options, see Universign's official documentation
 
 Once your transaction is created:
-* `url` is where you must redirect your users for them to sign
+* `sign_url` is where you must redirect your users for them to sign (always a String, available without any extra API call right after `.create`)
+* `signer_id` is the signer id parsed from the sign URL
 * `transaction_id` is the id you must save to retrieve it later. You can request up-to-date informations from Universign with `Universign::Transaction.new(transaction_id)`.
+* `signers` returns the signers progression as `Universign::SignerInfos` beans
 * `signed?` returns a boolean that tells you if the transaction is signed, or not !
+
+## Error handling
+
+Every error raised by the gem inherits from `Universign::Error`, so you can rescue
+them all at once or handle them individually:
+
+```ruby
+begin
+  Universign::Transaction.create(documents: documents, signers: signers)
+rescue Universign::NotEnoughTokens
+  # your Universign account ran out of tokens
+rescue Universign::DocumentURLInvalid => e
+  # Universign could not download a document by URL
+  e.url # => the offending URL
+rescue Universign::Error => e
+  # any other Universign error
+end
+```
+
+The most common ones are:
+
+| Exception                                | Raised when                                            |
+|------------------------------------------|--------------------------------------------------------|
+| `Universign::InvalidCredentials`         | login / password / endpoint are wrong                  |
+| `Universign::NotEnoughTokens`            | the account has no signature token left                |
+| `Universign::DocumentURLInvalid`         | a document URL cannot be downloaded (`#url` exposes it) |
+| `Universign::UnknownDocument`            | the transaction or custom id is unknown                |
+| `Universign::DocumentNotSigned`          | the document is not signed yet                          |
+| `Universign::ErrorWhenSigningPDF`        | Universign failed to sign the PDF                       |
+| `Universign::UnknownOption`              | an unknown option was passed to `.create`              |
+| `Universign::InvalidSignatureField`      | a signature field is not a `Universign::SignatureField`|
 
 ## Universign documentation
 
 As of September 25th 2018, all official Universign documentation can be found at https://help.universign.com/hc/fr/sections/360000148149-Guides-Universign.
 
+## Upgrading from 1.x to 2.0
+
+2.0 is a breaking release. The highlights:
+
+- `Transaction#url` is removed. Use `Transaction#sign_url` (always a String) and
+  `Transaction#signer_id` instead.
+- `Transaction.new(id)` no longer hits the API in the constructor — the info is
+  loaded lazily on first access.
+- `TransactionSigner#birtdate=` is renamed to `#birthdate=`.
+- Internal `raise "string"` calls are now typed `Universign::Error` subclasses.
+- Minimum Ruby version is now `3.0`.
+
+See the [CHANGELOG](CHANGELOG.md) for the full list.
+
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` (or `bundle exec rake spec`) to run the tests. The suite hits no network — the XML-RPC client is stubbed — and enforces 100% line and branch coverage via SimpleCov (report in `coverage/`). You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`.
 

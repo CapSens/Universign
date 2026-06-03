@@ -5,10 +5,8 @@ module Universign
       #
       # @return [Array<Universign::Document>]
       def documents
-        @client = Universign::Client.new
-
         @documents ||= safeguard do
-          result = @client.call('requester.getDocuments', @transaction_id)
+          result = Universign::Client.call("requester.getDocuments", @transaction_id)
           result.map do |document|
             Universign::Document.from_data(document)
           end
@@ -22,24 +20,6 @@ module Universign
       module ClassMethods
         attr_reader :documents
       end
-
-      # def signed_with_transaction_id(transaction_id)
-      #   @client = Universign::Client.new.client
-      #
-      #   safeguard(-> { return false }) do
-      #     result = @client.call('requester.getTransactionInfo', transaction_id)
-      #     !result['signerInfos'].any? { |s| s['status'] != 'signed' }
-      #   end
-      # end
-      #
-      # def signed_with_custom_id(custom_id)
-      #   @client = Universign::Client.new.client
-      #
-      #   safeguard(-> { return false }) do
-      #     result = @client.call('requester.getTransactionInfoByCustomId', custom_id)
-      #     !result['signerInfos'].any? { |s| s['status'] != 'signed' }
-      #   end
-      # end
     end
   end
 end

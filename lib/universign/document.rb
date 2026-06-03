@@ -2,7 +2,6 @@ module Universign
   class Document
     include Universign::Safeguard
 
-    attr_reader :name, :file_content, :file_url
     attr_accessor :params
 
     # Create a new Universign::Document
@@ -25,10 +24,8 @@ module Universign
     # @param [Hash] data
     # @return [Universign::Document]
     def self.from_data(data)
-      @params = data
-
-      document = Universign::Document.new
-      document.params.merge!(@params)
+      document = new
+      document.params.merge!(data)
       document
     end
 
@@ -36,85 +33,80 @@ module Universign
     #
     # @return [Array<Byte>]
     def content
-      @content ||= params['content']
+      @content ||= params["content"]
     end
 
     def content=(data)
       @content         = data
-      params[:content] =  XMLRPC::Base64.new(data)
+      params[:content] = XMLRPC::Base64.new(data)
     end
 
     # The URL to download the PDF document
     #
     # @return [String]
     def url
-      @url ||= params['url']
+      params["url"]
     end
 
     def url=(data)
-      @url          = data
-      params['url'] = data
+      params["url"] = data
     end
 
     # The type of this document
     #
     # @return [String]
     def document_type
-      @document_type ||= params['documentType']
+      params["documentType"]
     end
 
     # The file name of this document
     #
     # @return [String]
     def name
-      @name ||= params['name']
+      params["name"]
     end
 
     def name=(data)
-      @name          = data
-      params['name'] = data
+      params["name"] = data
     end
 
     def signature_fields=(data)
-      if !data.is_a?(Array)
-        raise 'SignatureFieldsMustBeAnArray'
-      end
+      raise Universign::SignatureFieldsMustBeAnArray unless data.is_a?(Array)
 
       @signature_fields = data
-      params['signatureFields'] = data.map do |d|
-        raise 'BadSignatureFieldType' unless d.instance_of?(SignatureField)
+      params["signatureFields"] = data.map do |d|
+        unless d.instance_of?(SignatureField)
+          raise Universign::InvalidSignatureField
+        end
 
         d.params
       end
     end
 
     def check_box_texts
-      @check_box_texts ||= params["checkBoxTexts"]
+      params["checkBoxTexts"]
     end
 
     def check_box_texts=(data)
-      if !data.is_a?(Array)
-        raise "CheckBoxTextsMustBeAnArray"
-      end
+      raise Universign::CheckBoxTextsMustBeAnArray unless data.is_a?(Array)
 
-      @check_box_texts = data
       params["checkBoxTexts"] = data
     end
 
-    # The meta data of the PDF document
+    # The meta data of the PDF document. Kept verbatim (the ivar) rather
+    # than read back from params, which would otherwise stringify the
+    # caller's symbol keys through HashWithIndifferentAccess.
     #
     # @return [Hash]
     def meta_data
-      @meta_data ||= params['metaData']
+      @meta_data ||= params["metaData"]
     end
 
     def meta_data=(data)
-      if !data.is_a?(Hash)
-        raise MetaDataMustBeAHash
-      end
+      raise Universign::MetaDataMustBeAHash unless data.is_a?(Hash)
 
       @meta_data         = data
-      params['metaData'] = data
+      params["metaData"] = data
     end
   end
 end

@@ -1,9 +1,9 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Universign::Configuration do
   after { restore_default_config }
-  context 'when endpoint is specified' do
-    let(:endpoint) { 'http://my-url.com' }
+  context "when endpoint is specified" do
+    let(:endpoint) { "http://my-url.com" }
 
     before do
       Universign.configure do |config|
@@ -11,13 +11,13 @@ describe Universign::Configuration do
       end
     end
 
-    it 'returns the endpoint' do
+    it "returns the endpoint" do
       expect(Universign.configuration.endpoint).to eql(endpoint)
     end
   end
 
-  context 'when login is specified' do
-    let(:login) { 'my-mail@provider.com' }
+  context "when login is specified" do
+    let(:login) { "my-mail@provider.com" }
 
     before do
       Universign.configure do |config|
@@ -25,13 +25,13 @@ describe Universign::Configuration do
       end
     end
 
-    it 'returns the login' do
+    it "returns the login" do
       expect(Universign.configuration.login).to eql(login)
     end
   end
 
-  context 'when password is specified' do
-    let(:password) { 'my-mail@provider.com' }
+  context "when password is specified" do
+    let(:password) { "my-mail@provider.com" }
 
     before do
       Universign.configure do |config|
@@ -39,8 +39,20 @@ describe Universign::Configuration do
       end
     end
 
-    it 'returns the password' do
+    it "returns the password" do
       expect(Universign.configuration.password).to eql(password)
+    end
+  end
+
+  describe ".configuration=" do
+    it "replaces the whole configuration object" do
+      custom = Universign::Configuration.new
+      custom.endpoint = "https://custom.test/"
+
+      Universign.configuration = custom
+
+      expect(Universign.configuration).to be(custom)
+      expect(Universign.configuration.endpoint).to eq("https://custom.test/")
     end
   end
 end

@@ -5,7 +5,7 @@ module Universign
         73002 => Universign::ErrorWhenSigningPDF, # An error occured when signing the PDF document
         73010 => Universign::InvalidCredentials, # The login and/or password are invalid.
         73025 => Universign::UnknownDocument, # The used transaction id or custom id is invalid
-        73027 => Universign::DocumentNotSigned
+        73027 => Universign::DocumentNotSigned,
       }.fetch(code, nil)
     end
   end
@@ -13,13 +13,29 @@ module Universign
   class NotEnoughTokens < Error; end
 
   class ErrorWhenSigningPDF < Error; end
+
   class InvalidCredentials < Error; end
+
   class UnknownException < Error; end
 
   class UnknownDocument < Error; end
+
   class DocumentNotSigned < Error; end
+
   class MissingDocument < Error; end
+
   class MetaDataMustBeAHash < Error; end
+
+  # An unknown key was passed in the transaction options.
+  class UnknownOption < Error; end
+
+  # A signature field was not a Universign::SignatureField.
+  class InvalidSignatureField < Error; end
+
+  class SignatureFieldsMustBeAnArray < Error; end
+
+  class CheckBoxTextsMustBeAnArray < Error; end
+
   class DocumentURLInvalid < Error
     attr_accessor :url
 
